@@ -17,6 +17,10 @@ namespace LemonadeStand
         }
         public void PlayGame()
         {
+            dailyForecast.DetermineCloudCover();
+        }
+        public void DisplayDayStats()
+        {
 
         }
     }

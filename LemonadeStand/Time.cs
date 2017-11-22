@@ -8,9 +8,11 @@ namespace LemonadeStand
 {
     class Time
     {
+        public static int minimumDays = 7;
+        public static int maximumDays = 21;
         public Time()
         {
-
+            
         }
     }
 }

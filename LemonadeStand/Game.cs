@@ -19,11 +19,7 @@ namespace LemonadeStand
         public void PlayGame()
         {
             todaysForecast = dailyForecast.GetTheDaysWeather();
-            todaysForecast = dailyForecast.GetTheDaysWeather();
-            todaysForecast = dailyForecast.GetTheDaysWeather();
-            todaysForecast = dailyForecast.GetTheDaysWeather();
-            todaysForecast = dailyForecast.GetTheDaysWeather();
-            todaysForecast = dailyForecast.GetTheDaysWeather();
+            userInterface.GetPlayTime();
         }
         public void DisplayDayStats()
         {

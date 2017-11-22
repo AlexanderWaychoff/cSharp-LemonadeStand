@@ -52,14 +52,15 @@ namespace LemonadeStand
         }
         public bool VerifyTime(string userInput)
         {
-            int inputToInt = Convert.ToInt32(userInput);
-            if (inputToInt >= Time.minimumDays && inputToInt <= Time.maximumDays)
+            if (userInput.All(char.IsDigit))
             {
-                return true;
+                int inputToInt = Convert.ToInt32(userInput);
+                if (inputToInt >= Time.minimumDays && inputToInt <= Time.maximumDays)
+                {
+                    return true;
+                }
             }
             return false;
         }
-        //Func<string, bool> between7and21 = VerifyTime;
-
     }
 }

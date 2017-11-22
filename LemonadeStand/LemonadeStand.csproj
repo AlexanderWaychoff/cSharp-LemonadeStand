@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions.cs" />
     <Compile Include="Cup.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Ice.cs" />

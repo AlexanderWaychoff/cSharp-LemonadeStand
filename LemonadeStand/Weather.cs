@@ -12,6 +12,10 @@ namespace LemonadeStand
         private int amountOfWeatherConditions = 4;
         private int possiblyAdjustRainChance = 2;
         private int adjustRainChance = 1;
+        private int gauranteedRain = 3;
+        private int maxTemperature = 110;
+        private int minTemperature = 65;
+        private bool isRaining = false;
         Random randomNumber = new Random();
         public Weather()
         {
@@ -21,7 +25,8 @@ namespace LemonadeStand
         {
             List<string> allWeather = new List<string>();
             allWeather.Add(DetermineCloudCover());
-            Console.WriteLine("The sky is " + allWeather[0] + ".");
+            IsRaining(allWeather[0]);
+            Console.WriteLine("The sky is {0}.", allWeather[0]);
             return weatherType;//remove later
         }
         public string DetermineCloudCover()
@@ -41,8 +46,37 @@ namespace LemonadeStand
                     odds -= adjustRainChance;
                 }
             }
-            Console.WriteLine(odds);
             return odds;
+        }
+        public bool IsRaining(string clouds)
+        {
+            int indexOfSky = weatherType.IndexOf(clouds);
+            int catchRandomNumber;
+            if (indexOfSky > possiblyAdjustRainChance)
+            {
+                catchRandomNumber = randomNumber.Next(10);
+                if (indexOfSky == gauranteedRain)
+                {
+                    if (catchRandomNumber < 9) //< 9 = 90% chance of rain on the worst weather
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (catchRandomNumber < 5) //< 5 = 50% chance of rain on conditions slightly worse than the worst
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        public string DetermineTemperature()
+        {
+            int temperature = randomNumber.Next(minTemperature, maxTemperature);
+            //reduce if raining is true
+            return "1";
         }
     }
 }

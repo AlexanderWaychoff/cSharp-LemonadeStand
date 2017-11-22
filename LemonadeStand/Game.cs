@@ -11,13 +11,19 @@ namespace LemonadeStand
         Interface userInterface = new Interface();
         Player player = new Player();
         Weather dailyForecast = new Weather();
+        Conditions todaysForecast;
         public Game()
         {
 
         }
         public void PlayGame()
         {
-            dailyForecast.GetTheDaysWeather();
+            todaysForecast = dailyForecast.GetTheDaysWeather();
+            todaysForecast = dailyForecast.GetTheDaysWeather();
+            todaysForecast = dailyForecast.GetTheDaysWeather();
+            todaysForecast = dailyForecast.GetTheDaysWeather();
+            todaysForecast = dailyForecast.GetTheDaysWeather();
+            todaysForecast = dailyForecast.GetTheDaysWeather();
         }
         public void DisplayDayStats()
         {

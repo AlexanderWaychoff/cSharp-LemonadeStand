@@ -25,7 +25,7 @@ namespace LemonadeStand
         {
 
         }
-        public List<string> GetTheDaysWeather()
+        public Conditions GetTheDaysWeather()
         {
             List<string> allWeather = new List<string>();
             cloudiness = DetermineCloudCover();
@@ -33,7 +33,7 @@ namespace LemonadeStand
             temperature = DetermineTemperature(isRaining);
             todaysWeather = new Conditions(cloudiness, isRaining, temperature);
             Console.WriteLine("The sky is {0} and it {1}.  The temperature is {2}.", todaysWeather.cloudiness, isRaining ? "is raining" : "is not raining", temperature);
-            return weatherType;//remove later
+            return todaysWeather;//remove later
         }
         public string DetermineCloudCover()
         {
@@ -58,7 +58,7 @@ namespace LemonadeStand
         {
             int indexOfSky = weatherType.IndexOf(clouds);
             int catchRandomNumber;
-            if (indexOfSky > possiblyAdjustRainChance)
+            if (indexOfSky >= possiblyAdjustRainChance)
             {
                 catchRandomNumber = randomNumber.Next(10);
                 if (indexOfSky == gauranteedRain)

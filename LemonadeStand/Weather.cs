@@ -19,7 +19,9 @@ namespace LemonadeStand
         }
         public List<string> GetTheDaysWeather()
         {
-            DetermineCloudCover();
+            List<string> allWeather = new List<string>();
+            allWeather.Add(DetermineCloudCover());
+            Console.WriteLine("The sky is " + allWeather[0] + ".");
             return weatherType;//remove later
         }
         public string DetermineCloudCover()

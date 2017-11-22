@@ -18,8 +18,15 @@ namespace LemonadeStand
         }
         public void PlayGame()
         {
+            Time gameLength = SetUpGameLength();
+            gameLength.PassageOfDay();
+            Console.WriteLine(gameLength);
             todaysForecast = dailyForecast.GetTheDaysWeather();
-            userInterface.GetPlayTime();
+        }
+        public Time SetUpGameLength()
+        {
+            Time gameLength = new Time(userInterface.GetPlayTime());
+            return gameLength;
         }
         public void DisplayDayStats()
         {

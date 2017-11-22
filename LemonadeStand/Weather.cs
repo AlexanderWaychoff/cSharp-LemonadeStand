@@ -15,8 +15,12 @@ namespace LemonadeStand
         private int gauranteedRain = 3;
         private int maxTemperature = 110;
         private int minTemperature = 65;
-        private bool isRaining = false;
+
+        private string cloudiness;
+        private bool isRaining;
+        private int temperature;
         Random randomNumber = new Random();
+        Conditions todaysWeather = new Conditions("slightly cloudy", false, 75);
         public Weather()
         {
 
@@ -24,9 +28,11 @@ namespace LemonadeStand
         public List<string> GetTheDaysWeather()
         {
             List<string> allWeather = new List<string>();
-            allWeather.Add(DetermineCloudCover());
-            IsRaining(allWeather[0]);
-            Console.WriteLine("The sky is {0}.", allWeather[0]);
+            cloudiness = DetermineCloudCover();
+            isRaining = IsRaining(cloudiness);
+            temperature = DetermineTemperature(isRaining);
+            todaysWeather = new Conditions(cloudiness, isRaining, temperature);
+            Console.WriteLine("The sky is {0} and it {1}.  The temperature is {2}.", todaysWeather.cloudiness, isRaining ? "is raining" : "is not raining", temperature);
             return weatherType;//remove later
         }
         public string DetermineCloudCover()
@@ -72,11 +78,20 @@ namespace LemonadeStand
             }
             return false;
         }
-        public string DetermineTemperature()
+        public int DetermineTemperature(bool isRaining)
         {
+            int yesterdayTemperature = todaysWeather.temperature;
             int temperature = randomNumber.Next(minTemperature, maxTemperature);
-            //reduce if raining is true
-            return "1";
+
+            //if (Math.Abs(yesterdayTemperature - temperature) >= 20)//20 is max temperature change in a single day
+            //{ add later if temperature fluctuates too much
+
+            //}
+            if (isRaining)
+            {
+                temperature -= randomNumber.Next(7, 20);
+            }
+            return temperature;
         }
     }
 }

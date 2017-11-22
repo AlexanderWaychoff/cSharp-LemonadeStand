@@ -8,9 +8,9 @@ namespace LemonadeStand
 {
     class Conditions
     {
-        private string cloudiness;
-        private bool isRaining;
-        private int temperature; 
+        public string cloudiness;
+        public bool isRaining;
+        public int temperature; 
         public Conditions(string cloudiness, bool isRaining, int temperature)
         {
             this.cloudiness = cloudiness;

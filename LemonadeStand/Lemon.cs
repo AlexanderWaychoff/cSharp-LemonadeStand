@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Program
+    class Lemon
     {
-        static void Main(string[] args)
+        private int daysToSpoil = 3;
+        private int spoilTime;
+        public Lemon()
         {
-            Game playGame = new Game();
-            playGame.PlayGame();
-            Console.ReadKey();
+            this.spoilTime = daysToSpoil; //
         }
     }
 }

@@ -31,7 +31,7 @@ namespace LemonadeStand
                 }
                 else
                 {
-                    Console.WriteLine("(ZzZz)_s|----P|");
+                    Console.WriteLine("(ZzZz)_s|P----|");
                 }
 
                 Thread.Sleep(60);

@@ -18,6 +18,7 @@ namespace LemonadeStand
         }
         public void PlayGame()
         {
+            userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
             gameLength.PassageOfDay();
             Console.WriteLine(gameLength);

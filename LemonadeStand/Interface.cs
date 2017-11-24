@@ -19,19 +19,25 @@ namespace LemonadeStand
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("**Welcome to Lemonade Stand!**\n");
             Console.WriteLine("In this game your goal is to sell as much lemonade as you can and at the best profitable price while also carefully managing your stock of lemons, sugar, ice and cups.\n");
-            Console.WriteLine("You'll have");
+            Console.WriteLine("You'll have between 7-21 days to get the highest score.  Good luck!\n");
         }
         public int GetPlayTime()
         {
             Func<string, bool> playTimeRange = VerifyTime;
             character = VerifyInput("How many in-game days would you like this game to be? (type a number between " + Time.minimumDays + " and " + Time.maximumDays + ")", playTimeRange);
-            return 0;
+            return ConvertToInt(character);
         }
 
         public int ConvertToInt(string character)
         {
             characterNumber = Convert.ToInt32(character);
             return characterNumber;
+        }
+        public string AskToBuyItems()
+        {
+            Console.WriteLine("You currently have 'put money here' money.  Your current stock contains 'lemons' lemons, 'sugar' cups of sugar', 'ice' ice cubes and 'cups' plastic cups.\n");
+            Console.WriteLine("What would you like to do?"); //finish typing options switch recipe/buy stock
+            return "1";
         }
         private string VerifyInput(string question, Func<string, bool> validation)
         {

@@ -10,6 +10,9 @@ namespace LemonadeStand
     {
         int characterNumber;
         string character;
+        string stockOption = "stock";
+        string recipeOption = "recipe";
+        string startOption = "start";
         public Interface()
         {
 
@@ -33,11 +36,12 @@ namespace LemonadeStand
             characterNumber = Convert.ToInt32(character);
             return characterNumber;
         }
-        public string AskToBuyItems()
+        public string AskWhatToDo()
         {
+            Func<string, bool> whatToDoOption = VerifyWhatToDo;
             Console.WriteLine("You currently have 'put money here' money.  Your current stock contains 'lemons' lemons, 'sugar' cups of sugar', 'ice' ice cubes and 'cups' plastic cups.\n");
-            Console.WriteLine("What would you like to do?"); //finish typing options switch recipe/buy stock
-            return "1";
+            character = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.", whatToDoOption); //finish typing options switch recipe/buy stock
+            return character;
         }
         private string VerifyInput(string question, Func<string, bool> validation)
         {
@@ -65,6 +69,14 @@ namespace LemonadeStand
                 {
                     return true;
                 }
+            }
+            return false;
+        }
+        public bool VerifyWhatToDo (string userInput)
+        {
+            if (userInput == stockOption || userInput == recipeOption || userInput == startOption)
+            {
+                return true;
             }
             return false;
         }

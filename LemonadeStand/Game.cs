@@ -20,6 +20,7 @@ namespace LemonadeStand
         {
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
+            userInterface.AskWhatToDo();
             gameLength.PassageOfDay();
             Console.WriteLine(gameLength);
             todaysForecast = dailyForecast.GetTheDaysWeather();

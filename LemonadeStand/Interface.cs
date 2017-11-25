@@ -10,9 +10,18 @@ namespace LemonadeStand
     {
         int characterNumber;
         string character;
-        string stockOption = "stock";
-        string recipeOption = "recipe";
-        string startOption = "start";
+
+        public string cancelOption = "cancel";
+
+        public string stockOption = "stock";
+        public string recipeOption = "recipe";
+        public string startOption = "start";
+
+        public string lemonsOption = "lemons";
+        public string sugarOption = "sugar";
+        public string iceOption = "ice";
+        public string cupsOption = "cups";
+
         public Interface()
         {
 
@@ -36,14 +45,31 @@ namespace LemonadeStand
             characterNumber = Convert.ToInt32(character);
             return characterNumber;
         }
-        public string AskWhatToDo()
+        public string AskWhatToDo(double money, int lemons, int sugar, int ice, int cups)
         {
             Func<string, bool> whatToDoOption = VerifyWhatToDo;
             Console.WriteLine("You currently have 'put money here' money.  Your current stock contains 'lemons' lemons, 'sugar' cups of sugar', 'ice' ice cubes and 'cups' plastic cups.\n");
             character = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.", whatToDoOption); //finish typing options switch recipe/buy stock
             return character;
         }
-        private string VerifyInput(string question, Func<string, bool> validation)
+        public string checkWhatToBuy(string userInput)
+        {
+            Func<string, bool> whichToBuy = buyWhichStock;
+            if (userInput == stockOption)
+            {
+                return VerifyInput("Would you like to buy '" + lemonsOption + "', '" + sugarOption + "', '" + iceOption + "', or '" + cupsOption + "'?  Or to go back and not buy anything, enter 'cancel'.", whichToBuy);
+            }
+            return "0";
+        }
+        public bool buyWhichStock(string userInput)
+        {
+            if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == cupsOption)
+            {
+                return true;
+            }
+            return false;
+        }
+        public string VerifyInput(string question, Func<string, bool> validation)
         {
             string userInput;
             bool isThereBadInput = false;

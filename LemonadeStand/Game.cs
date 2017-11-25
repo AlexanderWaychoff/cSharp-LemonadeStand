@@ -12,6 +12,7 @@ namespace LemonadeStand
         Player player = new Player();
         Weather dailyForecast = new Weather();
         Conditions todaysForecast;
+        string userInput;
         public Game()
         {
 
@@ -20,7 +21,7 @@ namespace LemonadeStand
         {
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
-            userInterface.AskWhatToDo();
+            //userInput = userInterface.AskWhatToDo();
             gameLength.PassageOfDay();
             Console.WriteLine(gameLength);
             todaysForecast = dailyForecast.GetTheDaysWeather();

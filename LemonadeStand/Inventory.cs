@@ -24,7 +24,7 @@ namespace LemonadeStand
         public Inventory(int startingLemons, int startingSugar, int startingIce, int startingCups)
         {
             money = new Money(startingFunds);
-            //this.moneyCount = money.;
+            this.moneyCount = startingFunds;
             this.lemonCount = startingLemons;
             this.sugarCount = startingSugar;
             this.iceCount = startingIce;

@@ -32,7 +32,7 @@ namespace LemonadeStand
             isRaining = IsRaining(cloudiness);
             temperature = DetermineTemperature(isRaining);
             todaysWeather = new Conditions(cloudiness, isRaining, temperature);
-            Console.WriteLine("The sky is {0} and it {1}.  The temperature is {2}.", todaysWeather.cloudiness, isRaining ? "is raining" : "is not raining", temperature);
+            Console.WriteLine("The sky is {0} and it {1}.  The temperature is {2}.\n", todaysWeather.cloudiness, isRaining ? "is raining" : "is not raining", temperature);
             return todaysWeather;//remove later
         }
         public string DetermineCloudCover()

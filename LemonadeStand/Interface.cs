@@ -75,6 +75,7 @@ namespace LemonadeStand
         public void CheckHowManyToBuy(string userInput, Inventory userInventory, Player player, Store store)
         {
             Func<string, bool> howMany10to100 = VerifyHowMany10to100;
+            Func<string, bool> howMany100to1000 = VerifyHowMany100to1000;
             if (userInput == lemonsOption)
             {
                 userNumber = ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.lemons10 * store.times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.lemons10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
@@ -85,6 +86,18 @@ namespace LemonadeStand
             {
                 userNumber = ConvertToInt(VerifyInput("'10' cups of sugar cost $" + store.sugar10.ToString("0.00") + ", '50' cups of sugar cost $" + (store.sugar10 * store.times5Multiplier).ToString("0.00") + ", and '100' cups of sugar cost $" + (store.sugar10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
                 player.BuySugar(userInventory, store, userNumber);
+                AskWhatToDo(userInventory, player, store);
+            }
+            if (userInput == iceOption)
+            {
+                userNumber = ConvertToInt(VerifyInput("'100' ice cubes cost $" + store.ice100.ToString("0.00") + ", '500' ice cubes cost $" + (store.ice100 * store.times5Multiplier).ToString("0.00") + ", and '1000' ice cubes cost $" + (store.ice100 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany100to1000));
+                player.BuyIce(userInventory, store, userNumber);
+                AskWhatToDo(userInventory, player, store);
+            }
+            if (userInput == cupsOption)
+            {
+                userNumber = ConvertToInt(VerifyInput("'100' cups cost $" + store.cups100.ToString("0.00") + ", '500' cups cost $" + (store.cups100 * store.times5Multiplier).ToString("0.00") + ", and '1000' cups cost $" + (store.cups100 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany100to1000));
+                player.BuyCups(userInventory, store, userNumber);
                 AskWhatToDo(userInventory, player, store);
             }
             if (userInput == cancelOption)
@@ -112,6 +125,14 @@ namespace LemonadeStand
         public bool VerifyHowMany10to100(string userInput)
         {
             if (userInput == "10" || userInput == "50" || userInput == "100" || userInput == "0")
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool VerifyHowMany100to1000(string userInput)
+        {
+            if (userInput == "100" || userInput == "500" || userInput == "1000" || userInput == "0")
             {
                 return true;
             }

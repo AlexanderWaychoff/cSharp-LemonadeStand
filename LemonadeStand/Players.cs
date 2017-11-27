@@ -8,10 +8,14 @@ namespace LemonadeStand
 {
     class Players
     {
-        Inventory playerInventory = new Inventory();
+        Inventory playerInventory = new Inventory(0, 0, 0, 0);
         public Players()
         {
 
+        }
+        public Inventory ObtainInventoryStatus()
+        {
+            return playerInventory;
         }
     }
 }

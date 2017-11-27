@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Money
+    public class Money
     {
-        double startingFunds = 20.00;
-        public Money()
+        double moneyCount;
+        public Money(double startingFunds)
         {
-
+            this.moneyCount = startingFunds;
         }
     }
 }

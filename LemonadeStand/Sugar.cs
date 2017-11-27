@@ -8,5 +8,10 @@ namespace LemonadeStand
 {
     class Sugar
     {
+        int sugarPotency;
+        public Sugar()
+        {
+            this.sugarPotency = 0;
+        }
     }
 }

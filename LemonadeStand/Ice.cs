@@ -8,5 +8,10 @@ namespace LemonadeStand
 {
     class Ice
     {
+        int iceCubeSize;
+        public Ice()
+        {
+            this.iceCubeSize = 0;
+        }
     }
 }

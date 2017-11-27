@@ -13,6 +13,7 @@ namespace LemonadeStand
         Weather dailyForecast = new Weather();
         Conditions todaysForecast;
         string userInput;
+        Inventory userInventory;
         public Game()
         {
 
@@ -22,6 +23,7 @@ namespace LemonadeStand
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
             //userInput = userInterface.AskWhatToDo();
+            TakeTurn();
             gameLength.PassageOfDay();
             Console.WriteLine(gameLength);
             todaysForecast = dailyForecast.GetTheDaysWeather();
@@ -31,9 +33,10 @@ namespace LemonadeStand
             Time gameLength = new Time(userInterface.GetPlayTime());
             return gameLength;
         }
-        public void DisplayDayStats()
+        public void TakeTurn()
         {
-
+            userInventory = player.ObtainInventoryStatus();
+            userInterface.AskWhatToDo(userInventory);
         }
     }
 }

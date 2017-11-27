@@ -45,10 +45,10 @@ namespace LemonadeStand
             characterNumber = Convert.ToInt32(character);
             return characterNumber;
         }
-        public string AskWhatToDo(double money, int lemons, int sugar, int ice, int cups)
+        public string AskWhatToDo(Inventory userInventory)
         {
             Func<string, bool> whatToDoOption = VerifyWhatToDo;
-            Console.WriteLine("You currently have 'put money here' money.  Your current stock contains 'lemons' lemons, 'sugar' cups of sugar', 'ice' ice cubes and 'cups' plastic cups.\n");
+            Console.WriteLine("You currently have '" + userInventory + "' money.  Your current stock contains 'lemons' lemons, 'sugar' cups of sugar, 'ice' ice cubes and 'cups' plastic cups.\n");
             character = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.", whatToDoOption); //finish typing options switch recipe/buy stock
             return character;
         }
@@ -57,13 +57,13 @@ namespace LemonadeStand
             Func<string, bool> whichToBuy = buyWhichStock;
             if (userInput == stockOption)
             {
-                return VerifyInput("Would you like to buy '" + lemonsOption + "', '" + sugarOption + "', '" + iceOption + "', or '" + cupsOption + "'?  Or to go back and not buy anything, enter 'cancel'.", whichToBuy);
+                return VerifyInput("Would you like to buy '" + lemonsOption + "', '" + sugarOption + "', '" + iceOption + "', or '" + cupsOption + "'?  Or to go back and not buy anything, enter '" + cancelOption + "'.", whichToBuy);
             }
             return "0";
         }
         public bool buyWhichStock(string userInput)
         {
-            if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == cupsOption)
+            if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == cupsOption || userInput == cancelOption)
             {
                 return true;
             }

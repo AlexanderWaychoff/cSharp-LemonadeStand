@@ -23,15 +23,15 @@ namespace LemonadeStand
         {
             return playerInventory;
         }
-        public void BuyLemons(Inventory userInventory, Store store)
+        public void BuyLemons(Inventory userInventory, Store store, double boughtLemons)
         {
-            Console.WriteLine("'10' lemons cost $" + store.lemons10 + ", '50' lemons cost $" + store.lemons10 * store.times5Multiplier + ", and '100' lemons cost $" + store.lemons10 * store.times10Multiplier + ".  How many will you buy?");
-            //playerInventory.moneyCount -= lemonCost;
-            //for (int i = boughtLemons; i > 0; i--)
-            //{
-            lemon = new Lemon();
-            lemons.Add(lemon);
-            //}
+            playerInventory.moneyCount -= store.lemons10;
+            for (double i = boughtLemons; i > 0; i--)
+            {
+                lemon = new Lemon();
+                lemons.Add(lemon);
+            }
+            userInventory.lemonCount = lemons.Count;
         }
     }
 }

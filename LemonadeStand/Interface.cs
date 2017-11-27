@@ -10,6 +10,7 @@ namespace LemonadeStand
     {
         int characterNumber;
         string userInput;
+        double userNumber;
 
         public string cancelOption = "cancel";
 
@@ -71,8 +72,9 @@ namespace LemonadeStand
             Func<string, bool> howMany10to100 = VerifyHowMany10to100;
             if (userInput == lemonsOption)
             {
-                ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.lemons10 * store.times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.lemons10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?", howMany10to100));
-                player.BuyLemons(userInventory, store);
+                userNumber = ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.lemons10 * store.times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.lemons10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?", howMany10to100));
+                player.BuyLemons(userInventory, store, userNumber);
+                AskWhatToDo(userInventory);
             }
             if (userInput == cancelOption)
             {

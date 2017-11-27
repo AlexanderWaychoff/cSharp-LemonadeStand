@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Player : Players
+    public class Player : Players
     {
         public Player()
         {

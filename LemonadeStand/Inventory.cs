@@ -17,10 +17,6 @@ namespace LemonadeStand
         public double moneyCount;
 
         double startingFunds = 20.00;
-        //int startingLemons = 0;
-        //int startingSugar = 0;
-        //int startingIce = 0;
-        //int startingCups = 0;
         public Inventory(int startingLemons, int startingSugar, int startingIce, int startingCups)
         {
             money = new Money(startingFunds);

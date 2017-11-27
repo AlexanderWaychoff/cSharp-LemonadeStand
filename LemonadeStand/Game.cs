@@ -33,15 +33,15 @@ namespace LemonadeStand
         }
         public void PlayGame(Time gameLength)
         {
-            TakeTurn();
+            TakeTurn(gameLength);
             gameLength.PassageOfDay();
             todaysForecast = dailyForecast.GetTheDaysWeather();
         }
-        public void TakeTurn()
+        public void TakeTurn(Time gameLength)
         {
             userInventory = player.ObtainInventoryStatus();
             userInput = userInterface.AskWhatToDo(userInventory);
-            userInterface.CheckWhatToDo(userInput);
+            userInterface.CheckWhatToDo(userInput, userInventory, player);
         }
     }
 }

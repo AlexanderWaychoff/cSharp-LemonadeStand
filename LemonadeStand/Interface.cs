@@ -52,21 +52,21 @@ namespace LemonadeStand
             userInput = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.", whatToDoOption); //finish typing options switch recipe/buy stock
             return userInput;
         }
-        public string CheckWhatToDo(string userInput)
+        public string CheckWhatToDo(string userInput, Inventory userInventory, Player player)
         {
             if (userInput == stockOption)
             {
-                CheckWhatToBuy();
+                CheckWhatToBuy(userInventory, player);
             }
             return "0";
         }
-        public void CheckWhatToBuy()
+        public void CheckWhatToBuy(Inventory userInventory, Player player)
         {
             Func<string, bool> whichToBuy = buyWhichStock;
             userInput = VerifyInput("Would you like to buy '" + lemonsOption + "', '" + sugarOption + "', '" + iceOption + "', or '" + cupsOption + "'?  Or to go back and not buy anything, enter '" + cancelOption + "'.", whichToBuy);
             if (userInput == lemonsOption)
             {
-
+                player.BuyLemons(userInventory);
             }
         }
         public bool buyWhichStock(string userInput)

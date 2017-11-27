@@ -22,6 +22,7 @@ namespace LemonadeStand
         public string sugarOption = "sugar";
         public string iceOption = "ice";
         public string cupsOption = "cups";
+        public string priceOption = "price";
 
         public Interface()
         {
@@ -36,7 +37,7 @@ namespace LemonadeStand
         }
         public void DisplayRecipe(Recipe recipe)
         {
-            Console.WriteLine("\nFor each pitcher of lemonade you are using: " + recipe.lemonsUsed + " lemon(s), " + recipe.sugarUsed + " cup(s) of sugar, and " + recipe.iceUsed + " ice cube(s).\n");
+            Console.WriteLine("\nFor each pitcher of lemonade you are using: " + recipe.lemonsUsed + " lemon(s), " + recipe.sugarUsed + " cup(s) of sugar, and " + recipe.iceUsed + " ice cube(s).  You are currently charging $" + recipe.price.ToString("0.00") + " per cup.\n");
         }
         public int GetPlayTime()
         {
@@ -113,13 +114,14 @@ namespace LemonadeStand
         {
             Func<string, bool> whichToChange = VerifyWhichToChange;
             DisplayRecipe(recipe);
-            userInput = VerifyInput("Would you like to change the amount of '" + lemonsOption + "', '" + sugarOption + "', or '" + iceOption + "'?  Or to go back and not change anything to this recipe, enter '" + cancelOption + "'.\n", whichToChange);
+            userInput = VerifyInput("Would you like to change the " + priceOption + " per cup?  Or one of the ingredients: '" + lemonsOption + "', '" + sugarOption + "', or '" + iceOption + "'?  Or to go back and not change anything to this recipe, enter '" + cancelOption + "'.\n", whichToChange);
             ChangeRecipe(userInput, userInventory, player, store, recipe);
         }
         public void ChangeRecipe(string userInput, Inventory userInventory, Player player, Store store, Recipe recipe)
         {
             Func<string, bool> check1To10 = Verify1To10;
             Func<string, bool> check1To50 = Verify1To50;
+            Func<string, bool> check5Dollars = VerifyUpTo5;
             if (userInput == lemonsOption)
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many lemons would you like the new recipe to have?  Enter a integer between 1 through 10 (1 being lowest quality, 10 being highest)\n", check1To10));
@@ -136,6 +138,12 @@ namespace LemonadeStand
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many ice cubes would you like the new recipe to have?  Enter a integer between 1 through 50 (quality depends on how high or low the temperature is; less ice if cold, or more ice if hot)\n", check1To50));
                 recipe.iceUsed = userNumber;
+                CheckRecipe(userInventory, player, store, recipe);
+            }
+            if (userInput == priceOption)
+            {//change so price can be put in with cents; only accepts whole dollars right now
+                userNumber = ConvertToInt(VerifyInput("\nHow much would you like to charge per cup?  Enter a number between 0.01 and 5.00 (price will affect demand and a customer's willingness to purchase your lemonade based on weather conditions)\n", check5Dollars));
+                recipe.price = userNumber;
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == cancelOption)
@@ -186,7 +194,7 @@ namespace LemonadeStand
         }
         public bool VerifyWhichToChange(string userInput)
         {
-            if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == cancelOption)
+            if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == priceOption ||userInput == cancelOption)
             {
                 return true;
             }
@@ -222,6 +230,18 @@ namespace LemonadeStand
             {
                 int inputToInt = Convert.ToInt32(userInput);
                 if (inputToInt >= 1 && inputToInt <= 50)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool VerifyUpTo5(string userInput)
+        {
+            if (userInput.All(char.IsDigit))
+            {
+                int inputToInt = Convert.ToInt32(userInput);
+                if (inputToInt >= 0.01 && inputToInt <= 5.00)
                 {
                     return true;
                 }

@@ -52,30 +52,32 @@ namespace LemonadeStand
             userInput = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.", whatToDoOption); //finish typing options switch recipe/buy stock
             return userInput;
         }
-        public string CheckWhatToDo(string userInput, Inventory userInventory, Player player)
+        public string CheckWhatToDo(string userInput, Inventory userInventory, Player player, Store store)
         {
             if (userInput == stockOption)
             {
-                CheckWhatToBuy(userInventory, player);
+                CheckWhatToBuy(userInventory, player, store);
             }
             return "0";
         }
-        public void CheckWhatToBuy(Inventory userInventory, Player player)
+        public void CheckWhatToBuy(Inventory userInventory, Player player, Store store)
         {
-            Func<string, bool> whichToBuy = buyWhichStock;
+            Func<string, bool> whichToBuy = VerifyWhichStock;
             userInput = VerifyInput("Would you like to buy '" + lemonsOption + "', '" + sugarOption + "', '" + iceOption + "', or '" + cupsOption + "'?  Or to go back and not buy anything, enter '" + cancelOption + "'.", whichToBuy);
+            CheckHowManyToBuy(userInput, userInventory, player, store);
+        }
+        public void CheckHowManyToBuy(string userInput, Inventory userInventory, Player player, Store store)
+        {
+            Func<string, bool> howMany10to100 = VerifyHowMany10to100;
             if (userInput == lemonsOption)
             {
-                player.BuyLemons(userInventory);
+                ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10 + ", '50' lemons cost $" + store.lemons10 * store.times5Multiplier + ", and '100' lemons cost $" + store.lemons10 * store.times10Multiplier + ".  How many will you buy?", howMany10to100));
+                player.BuyLemons(userInventory, store);
             }
-        }
-        public bool buyWhichStock(string userInput)
-        {
-            if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == cupsOption || userInput == cancelOption)
+            if (userInput == cancelOption)
             {
-                return true;
+                AskWhatToDo(userInventory);
             }
-            return false;
         }
         public string VerifyInput(string question, Func<string, bool> validation)
         {
@@ -93,6 +95,22 @@ namespace LemonadeStand
             }
             while (!validation(userInput));
             return userInput;
+        }
+        public bool VerifyHowMany10to100(string userInput)
+        {
+            if (userInput == "10" || userInput == "50" || userInput == "100")
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool VerifyWhichStock(string userInput)
+        {
+            if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == cupsOption || userInput == cancelOption)
+            {
+                return true;
+            }
+            return false;
         }
         public bool VerifyTime(string userInput)
         {

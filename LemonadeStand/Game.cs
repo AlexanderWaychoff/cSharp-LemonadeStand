@@ -10,6 +10,7 @@ namespace LemonadeStand
     {
         Interface userInterface = new Interface();
         Player player = new Player();
+        Store store = new Store(); //0.75, 1.10, 0.25, 1.20
         Weather dailyForecast = new Weather();
         Conditions todaysForecast;
         string userInput;
@@ -40,8 +41,14 @@ namespace LemonadeStand
         public void TakeTurn(Time gameLength)
         {
             userInventory = player.ObtainInventoryStatus();
+            store = ChangeStorePrices();
             userInput = userInterface.AskWhatToDo(userInventory);
-            userInterface.CheckWhatToDo(userInput, userInventory, player);
+            userInterface.CheckWhatToDo(userInput, userInventory, player, store);
+        }
+        public Store ChangeStorePrices()
+        {
+            //store = store.UpdateStore();
+            return store.UpdateStore();
         }
     }
 }

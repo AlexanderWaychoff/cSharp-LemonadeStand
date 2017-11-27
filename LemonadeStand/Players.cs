@@ -187,7 +187,10 @@ namespace LemonadeStand
         }
         public void AnnounceIceMeltage(Inventory userInventory)
         {
-            Console.WriteLine("\n**You had " + totalIceCubes.Count + " unused ice cubes which are now melted.**\n");
+            if (totalIceCubes.Count > 0)
+            {
+                Console.WriteLine("\n**You had " + totalIceCubes.Count + " unused ice cubes which are now melted.**\n");
+            }
             totalIceCubes.Clear();
             userInventory.iceCount = totalIceCubes.Count;
         }

@@ -9,6 +9,7 @@ namespace LemonadeStand
     public class Store
     {
         Random randomNumber;
+        double randomCents;
 
         public double lemons10;
         public double sugar10;
@@ -30,19 +31,17 @@ namespace LemonadeStand
             this.ice100 = baseIceCost;
             this.cups100 = baseCupCost;
         }
-
-        public double GetLemonPrice()
-        {
-
-            return 0.0;
-        }
         public Store UpdateStore()
         {
             randomNumber = new Random();
-            this.lemons10 = baseLemonCost + randomNumber.Next(20)/100;  //divide by 100 to convert to cents
-            this.sugar10 = baseSugarCost + randomNumber.Next(27)/100;
-            this.ice100 = baseIceCost + randomNumber.Next(7)/100;
-            this.cups100 = baseCupCost + randomNumber.Next(30)/100;
+            randomCents = randomNumber.Next(20);    //random increment
+            this.lemons10 = baseLemonCost + randomCents/100;  //divide by 100 to convert to cents
+            randomCents = randomNumber.Next(27);
+            this.sugar10 = baseSugarCost + randomCents/100;
+            randomCents = randomNumber.Next(7);
+            this.ice100 = baseIceCost + randomCents/100;
+            randomCents = randomNumber.Next(30);
+            this.cups100 = baseCupCost + randomCents/100;
             return this;
         }
     }

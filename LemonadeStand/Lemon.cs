@@ -8,10 +8,10 @@ namespace LemonadeStand
 {
     class Lemon
     {
-        private List<string> lemonDetail = new List<string>() {"squishy", "lumpy", "firm"};
-        private string lemonStatus;
-        private int daysToSpoil = 3;
-        private int spoilTime;
+        public List<string> lemonDetail = new List<string>() {"squishy", "lumpy", "firm"};
+        public string lemonStatus;
+        public int daysToSpoil = 3;
+        public int spoilTime;
         public Lemon()
         {
             this.spoilTime = daysToSpoil;

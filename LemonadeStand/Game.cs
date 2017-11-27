@@ -35,6 +35,11 @@ namespace LemonadeStand
         public void PlayGame(Time gameLength)
         {
             TakeTurn(gameLength);
+            TakeTurn(gameLength);
+
+            TakeTurn(gameLength);
+            TakeTurn(gameLength);
+
             gameLength.PassageOfDay();
             todaysForecast = dailyForecast.GetTheDaysWeather();
         }
@@ -43,6 +48,7 @@ namespace LemonadeStand
             userInventory = player.ObtainInventoryStatus();
             store = ChangeStorePrices();
             userInput = userInterface.AskWhatToDo(userInventory, player, store);
+            player.AgeLemons();
             //userInterface.CheckWhatToDo(userInput, userInventory, player, store);
         }
         public Store ChangeStorePrices()

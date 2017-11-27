@@ -17,6 +17,7 @@ namespace LemonadeStand
         public double moneyCount;
 
         double startingFunds = 20.00;
+
         public Inventory(int startingLemons, int startingSugar, int startingIce, int startingCups)
         {
             money = new Money(startingFunds);
@@ -31,5 +32,6 @@ namespace LemonadeStand
             //Cup cups = new Cup();
 
         }
+        
     }
 }

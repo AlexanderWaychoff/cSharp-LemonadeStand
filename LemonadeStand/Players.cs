@@ -8,10 +8,9 @@ namespace LemonadeStand
 {
     public class Players
     {
-        int startingLemons = 0;
-        int startingSugar = 0;
-        int startingIce = 0;
-        int startingCups = 0;
+        int nearlyBadLemons;
+        int spoiledLemons;
+
 
         double priceMultiplier;
 
@@ -59,11 +58,11 @@ namespace LemonadeStand
             {
                 return 0;
             }
-            else if (amountBought == 10)
+            else if (amountBought == 100)
             {
                 return store.times1Multiplier;
             }
-            else if (amountBought == 50)
+            else if (amountBought == 500)
             {
                 return store.times5Multiplier;
             }
@@ -131,7 +130,7 @@ namespace LemonadeStand
             priceMultiplier = CalculateIceCupsMultiplier(store, boughtCups);
             if (playerInventory.moneyCount - store.cups100 * priceMultiplier < 0)
             {
-                Console.WriteLine("\n**You can't afford to buy " + boughtCups + " ice cubes.**\n");
+                Console.WriteLine("\n**You can't afford to buy " + boughtCups + " cups.**\n");
             }
             else
             {
@@ -143,6 +142,32 @@ namespace LemonadeStand
                 }
                 userInventory.cupsCount = totalCups.Count;
             }
+        }
+        public void AgeLemons()
+        {
+            foreach (Lemon lemon in totalLemons)
+            {
+                lemon.spoilTime -= 1;
+            }
+            TestLemonSpoilage();
+        }
+        public void TestLemonSpoilage()
+        {
+            foreach (Lemon lemon in totalLemons)
+            {
+                if(lemon.spoilTime == 1)
+                {
+                    nearlyBadLemons += 1;
+                }
+                if (lemon.spoilTime == 0)
+                {
+                    spoiledLemons += 1;
+                    totalLemons.Remove(lemon);
+                }
+            }
+            Console.WriteLine(spoiledLemons + " were thrown out due to spoilage.  " + nearlyBadLemons + " are currently " + lemon.lemonStatus + " and will spoil if not used by tomorrow.**\n");
+            nearlyBadLemons = 0;
+            spoiledLemons = 0;
         }
     }
 }

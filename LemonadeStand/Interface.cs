@@ -71,7 +71,7 @@ namespace LemonadeStand
             Func<string, bool> howMany10to100 = VerifyHowMany10to100;
             if (userInput == lemonsOption)
             {
-                ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10 + ", '50' lemons cost $" + store.lemons10 * store.times5Multiplier + ", and '100' lemons cost $" + store.lemons10 * store.times10Multiplier + ".  How many will you buy?", howMany10to100));
+                ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.lemons10 * store.times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.lemons10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?", howMany10to100));
                 player.BuyLemons(userInventory, store);
             }
             if (userInput == cancelOption)

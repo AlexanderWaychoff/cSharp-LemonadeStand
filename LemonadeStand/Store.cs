@@ -38,10 +38,10 @@ namespace LemonadeStand
         public Store UpdateStore()
         {
             randomNumber = new Random();
-            this.lemons10 = baseLemonCost + randomNumber.Next(20);
-            this.sugar10 = baseSugarCost + randomNumber.Next(27);
-            this.ice100 = baseIceCost + randomNumber.Next(7);
-            this.cups100 = baseCupCost + randomNumber.Next(30);
+            this.lemons10 = baseLemonCost + randomNumber.Next(20)/100;  //divide by 100 to convert to cents
+            this.sugar10 = baseSugarCost + randomNumber.Next(27)/100;
+            this.ice100 = baseIceCost + randomNumber.Next(7)/100;
+            this.cups100 = baseCupCost + randomNumber.Next(30)/100;
             return this;
         }
     }

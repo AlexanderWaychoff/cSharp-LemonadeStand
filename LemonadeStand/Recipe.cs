@@ -8,9 +8,9 @@ namespace LemonadeStand
 {
     public class Recipe
     {
-        public int lemonsUsed;
-        public int sugarUsed;
-        public int iceUsed;
+        public double lemonsUsed;
+        public double sugarUsed;
+        public double iceUsed;
         public Recipe(int lemonsUsed, int sugarUsed, int iceUsed)
         {
             this.lemonsUsed = lemonsUsed;

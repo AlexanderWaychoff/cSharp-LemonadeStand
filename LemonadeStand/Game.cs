@@ -12,6 +12,7 @@ namespace LemonadeStand
         Player player = new Player();
         Store store = new Store(); //0.75, 1.10, 0.25, 1.20
         Weather dailyForecast = new Weather();
+        Recipe recipe = new Recipe(4, 4, 20);
         Conditions todaysForecast;
         string userInput;
         Inventory userInventory;
@@ -47,7 +48,7 @@ namespace LemonadeStand
         {
             userInventory = player.ObtainInventoryStatus();
             store = ChangeStorePrices();
-            userInput = userInterface.AskWhatToDo(userInventory, player, store);
+            userInput = userInterface.AskWhatToDo(userInventory, player, store, recipe);
             player.AgeLemons(userInventory);
             player.AnnounceIceMeltage(userInventory);
             //userInterface.CheckWhatToDo(userInput, userInventory, player, store);

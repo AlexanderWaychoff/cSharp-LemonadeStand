@@ -15,6 +15,7 @@ namespace LemonadeStand
         public double ice100;
         public double cups100;
 
+        public double times1Multiplier = 1;
         public double times5Multiplier = 4.5;
         public double times10Multiplier = 8.8;
 

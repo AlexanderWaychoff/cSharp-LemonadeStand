@@ -42,8 +42,8 @@ namespace LemonadeStand
         {
             userInventory = player.ObtainInventoryStatus();
             store = ChangeStorePrices();
-            userInput = userInterface.AskWhatToDo(userInventory);
-            userInterface.CheckWhatToDo(userInput, userInventory, player, store);
+            userInput = userInterface.AskWhatToDo(userInventory, player, store);
+            //userInterface.CheckWhatToDo(userInput, userInventory, player, store);
         }
         public Store ChangeStorePrices()
         {

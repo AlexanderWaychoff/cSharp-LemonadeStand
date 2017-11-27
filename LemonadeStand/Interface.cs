@@ -46,11 +46,12 @@ namespace LemonadeStand
             characterNumber = Convert.ToInt32(character);
             return characterNumber;
         }
-        public string AskWhatToDo(Inventory userInventory)
+        public string AskWhatToDo(Inventory userInventory, Player player, Store store)
         {
             Func<string, bool> whatToDoOption = VerifyWhatToDo;
             Console.WriteLine("You currently have $" + userInventory.moneyCount.ToString("0.00") + ".  Your current stock contains " + userInventory.lemonCount + " lemons, " + userInventory.sugarCount + " cups of sugar, " + userInventory.iceCount + " ice cubes and " + userInventory.cupsCount + " plastic cups.\n");
-            userInput = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.", whatToDoOption); //finish typing options switch recipe/buy stock
+            userInput = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.\n", whatToDoOption); //finish typing options switch recipe/buy stock
+            CheckWhatToDo(userInput, userInventory, player, store);
             return userInput;
         }
         public string CheckWhatToDo(string userInput, Inventory userInventory, Player player, Store store)
@@ -59,12 +60,16 @@ namespace LemonadeStand
             {
                 CheckWhatToBuy(userInventory, player, store);
             }
+            if (userInput == recipeOption)
+            {
+
+            }
             return "0";
         }
         public void CheckWhatToBuy(Inventory userInventory, Player player, Store store)
         {
             Func<string, bool> whichToBuy = VerifyWhichStock;
-            userInput = VerifyInput("Would you like to buy '" + lemonsOption + "', '" + sugarOption + "', '" + iceOption + "', or '" + cupsOption + "'?  Or to go back and not buy anything, enter '" + cancelOption + "'.", whichToBuy);
+            userInput = VerifyInput("Would you like to buy '" + lemonsOption + "', '" + sugarOption + "', '" + iceOption + "', or '" + cupsOption + "'?  Or to go back and not buy anything, enter '" + cancelOption + "'.\n", whichToBuy);
             CheckHowManyToBuy(userInput, userInventory, player, store);
         }
         public void CheckHowManyToBuy(string userInput, Inventory userInventory, Player player, Store store)
@@ -72,13 +77,19 @@ namespace LemonadeStand
             Func<string, bool> howMany10to100 = VerifyHowMany10to100;
             if (userInput == lemonsOption)
             {
-                userNumber = ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.lemons10 * store.times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.lemons10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?", howMany10to100));
+                userNumber = ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.lemons10 * store.times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.lemons10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
                 player.BuyLemons(userInventory, store, userNumber);
-                AskWhatToDo(userInventory);
+                AskWhatToDo(userInventory, player, store);
+            }
+            if (userInput == sugarOption)
+            {
+                userNumber = ConvertToInt(VerifyInput("'10' cups of sugar cost $" + store.sugar10.ToString("0.00") + ", '50' cups of sugar cost $" + (store.sugar10 * store.times5Multiplier).ToString("0.00") + ", and '100' cups of sugar cost $" + (store.sugar10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
+                player.BuySugar(userInventory, store, userNumber);
+                AskWhatToDo(userInventory, player, store);
             }
             if (userInput == cancelOption)
             {
-                AskWhatToDo(userInventory);
+                AskWhatToDo(userInventory, player, store);
             }
         }
         public string VerifyInput(string question, Func<string, bool> validation)
@@ -100,7 +111,7 @@ namespace LemonadeStand
         }
         public bool VerifyHowMany10to100(string userInput)
         {
-            if (userInput == "10" || userInput == "50" || userInput == "100")
+            if (userInput == "10" || userInput == "50" || userInput == "100" || userInput == "0")
             {
                 return true;
             }

@@ -49,6 +49,7 @@ namespace LemonadeStand
             store = ChangeStorePrices();
             userInput = userInterface.AskWhatToDo(userInventory, player, store);
             player.AgeLemons(userInventory);
+            player.AnnounceIceMeltage(userInventory);
             //userInterface.CheckWhatToDo(userInput, userInventory, player, store);
         }
         public Store ChangeStorePrices()

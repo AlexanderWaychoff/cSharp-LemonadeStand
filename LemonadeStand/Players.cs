@@ -143,19 +143,23 @@ namespace LemonadeStand
                 userInventory.cupsCount = totalCups.Count;
             }
         }
-        public void AgeLemons()
+        public void AgeLemons(Inventory userInventory)
         {
-            foreach (Lemon lemon in totalLemons)
+            foreach (Lemon lemon in totalLemons.ToList())
             {
                 lemon.spoilTime -= 1;
+                if (lemon.spoilTime > 0)
+                {
+                    lemon.lemonStatus = lemon.lemonDetail[lemon.spoilTime - 1];
+                }
             }
-            TestLemonSpoilage();
+            TestLemonSpoilage(userInventory);
         }
-        public void TestLemonSpoilage()
+        public void TestLemonSpoilage(Inventory userInventory)
         {
-            foreach (Lemon lemon in totalLemons)
+            foreach (Lemon lemon in totalLemons.ToList())
             {
-                if(lemon.spoilTime == 1)
+                if (lemon.spoilTime == 1)
                 {
                     nearlyBadLemons += 1;
                 }
@@ -165,9 +169,21 @@ namespace LemonadeStand
                     totalLemons.Remove(lemon);
                 }
             }
-            Console.WriteLine(spoiledLemons + " were thrown out due to spoilage.  " + nearlyBadLemons + " are currently " + lemon.lemonStatus + " and will spoil if not used by tomorrow.**\n");
+            userInventory.lemonCount = totalLemons.Count;
+            AnnounceLemonSpoilage(nearlyBadLemons, spoiledLemons);
             nearlyBadLemons = 0;
             spoiledLemons = 0;
+        }
+        public void AnnounceLemonSpoilage(int nearlyBadLemons, int spoiledLemons)
+        {
+            if (!(spoiledLemons == 0))
+            {
+                Console.Write("\n**" + spoiledLemons + " were thrown out due to spoilage.**\n");
+            }
+            if(!(nearlyBadLemons == 0))
+            {
+                Console.Write("\n**" + nearlyBadLemons + " are currently " + lemon.lemonStatus + " and will spoil if not used by tomorrow.**\n");
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ namespace LemonadeStand
             for (int i = customers.Count; i > 0; i--)
             //foreach (Customer customer in customers.ToList())
             {
-                customer.percentChanceOfBuying = customerChance;
+                customers[i - 1].percentChanceOfBuying = customerChance;
             }
             return customers;
         }
@@ -57,9 +57,13 @@ namespace LemonadeStand
             for (int i = customers.Count; i > 0; i--)
             //foreach (Customer customer in customers.ToList())
             {
-                if (customer.friendlyness > 5)
+                if (customers[i - 1].friendlyness > 5)
                 {
-                    customer.percentChanceOfBuying += baseExtraCustomerChance * (customer.friendlyness - 5);
+                    customers[i - 1].percentChanceOfBuying += baseExtraCustomerChance * (customers[i - 1].friendlyness - 5);
+                }
+                if (customers[i - 1].friendlyness < 4)
+                {
+                    customers[i - 1].percentChanceOfBuying -= baseExtraCustomerChance * (4 - customers[i - 1].friendlyness);
                 }
             }
             return customers;
@@ -71,11 +75,11 @@ namespace LemonadeStand
             {
                 storeRandomValue = randomRainValue.Next(20, 51);
             }
-            customerChance = (recipe.price - Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100)/10; // every /10 cents increases or decreases customer chance
+            customerChance = (Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100)/10 - recipe.price; // every /10 cents increases or decreases customer chance
             for (int i = customers.Count; i > 0; i--)
             //foreach (Customer customer in customers.ToList())
             {
-                customer.percentChanceOfBuying += customerChance;
+                customers[i - 1].percentChanceOfBuying += customerChance;
             }
             return customers;
         }
@@ -91,8 +95,8 @@ namespace LemonadeStand
                 {
                     userInventory.moneyCount += recipe.price;
 
-                    customer.hasPurchasedToday = true;
-                    customer = testCustomerSatisfaction(customer, dailyWeather, recipe);
+                    customers[i - 1].hasPurchasedToday = true;
+                    customers[i - 1] = testCustomerSatisfaction(customers[i - 1], dailyWeather, recipe);
                 }
             }
             return customers;
@@ -140,11 +144,11 @@ namespace LemonadeStand
         }
         public int testCustomerPricing(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
-            if ((recipe.price - Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 > customerCentQuality)
+            if ((Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 - recipe.price < customerCentQuality)
             {
                 return -1;  //customer paid more than 50 cents for the lemonade, reduce satisfaction
             }
-            else if ((recipe.price - Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 < customerCentQuality)
+            else if ((Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 - recipe.price > customerCentQuality)
             {
                 return 1;   //customer paid less than 50 cents, increase satisfaction
             }
@@ -178,36 +182,37 @@ namespace LemonadeStand
             for (int i = customers.Count; i > 0; i--)
             //foreach (Customer customer in customers.ToList())
             {
-                if (customer.hasPurchasedToday && customer.isPleased)
+                if (customers[i - 1].hasPurchasedToday && customers[i - 1].isPleased)
                 {
                     satisfiedCustomerCount += 1;
-                    customer.friendlyness += 3;
-                    customer.awareOfLemonadeStand += 1;
-                    if (customer.friendlyness > 10)
+                    customers[i - 1].friendlyness += 3;
+                    customers[i - 1].awareOfLemonadeStand += 1;
+                    if (customers[i - 1].friendlyness > 10)
                     {
-                        customer.awareOfLemonadeStand += 1;
-                        customer.friendlyness = 10;
+                        customers[i - 1].awareOfLemonadeStand += 1;
+                        customers[i - 1].friendlyness = 10;
                     }
                 }
-                if (customer.hasPurchasedToday && customer.isDispleased)
+                if (customers[i - 1].hasPurchasedToday && customers[i - 1].isDispleased)
                 {
-                    customer.friendlyness -= 5;
-                    if (customer.friendlyness < 1)
+                    customers[i - 1].friendlyness -= 5;
+                    if (customers[i - 1].friendlyness < 1)
                     {
-                        customer.friendlyness = 1;
+                        customers[i - 1].friendlyness = 1;
                     }
-                    customer.awareOfLemonadeStand -= 5;
-                    if (customer.awareOfLemonadeStand < 1)
+                    customers[i - 1].awareOfLemonadeStand -= 5;
+                    if (customers[i - 1].awareOfLemonadeStand < 1)
                     {
-                        customer.awareOfLemonadeStand = 1;
+                        customers[i - 1].awareOfLemonadeStand = 1;
                     }
                 }
-                customer.hasPurchasedToday = false;
-                customer.isPleased = false;
-                customer.isDispleased = false;
-                if (randomAttitude.Next(4, 11) <= minimumForCustomerRemoval && customer.friendlyness == 1)
+                customers[i - 1].hasPurchasedToday = false;
+                customers[i - 1].isPleased = false;
+                customers[i - 1].isDispleased = false;
+                if (randomAttitude.Next(4, 11) <= minimumForCustomerRemoval && customers[i - 1].friendlyness == 1)
                 {
-                    customers.Remove(customer);
+                    customers.Remove(customers[i - 1]);
+                    i -= 1;
                 }
             }
             customers = AddPopularCustomers(customers, userInterface);
@@ -228,9 +233,9 @@ namespace LemonadeStand
             popularCustomerCount = 0;
             for (int i = 0; i < customers.Count; i++)
             {
-                if (customer.awareOfLemonadeStand > 5)
+                if (customers[i].awareOfLemonadeStand > 5)
                 {
-                    for (int j = 5; j < customer.awareOfLemonadeStand; j++)
+                    for (int j = 5; j < customers[i].awareOfLemonadeStand; j++)
                     {
                         popularCustomerCount += 1;
                         customer = new Customer(randomThirstiness.Next(1, 11), randomFlavor.Next(1, 11), randomAttitude.Next(6, 11), startingPopularity - randomPopularity.Next(0, 3), false);

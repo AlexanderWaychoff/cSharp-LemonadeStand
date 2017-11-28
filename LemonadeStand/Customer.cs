@@ -13,6 +13,7 @@ namespace LemonadeStand
         public int friendlyness;    //1-10, 1 is grumpy, 10 is happy
         public int awareOfLemonadeStand;    //1-10, 1 = stand is unpopular, 10 = stand is very popular; by default starts low and gradually goes up
         public bool isPleased = false;
+        public bool hasPurchasedToday;
 
         public Customer(int thirstiness, int flavorPreference, int friendlyness, int awareOfLemonadeStand, bool isPleased)
         {
@@ -21,6 +22,7 @@ namespace LemonadeStand
             this.friendlyness = friendlyness;
             this.awareOfLemonadeStand = awareOfLemonadeStand;
             this.isPleased = isPleased;
+            this.hasPurchasedToday = false;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace LemonadeStand
         public int startingPopularity = 3;  //how aware customers are at the start of the game, fluctuating down to 1
         public double satisfiedCustomerCount;
         public double popularCustomerCount;
+        public int minimumForCustomerRemoval = 6; //random number between 4-10, if equal to this or less will remove customer from list
         Random randomThirstiness = new Random();
         Random randomFlavor = new Random();
         Random randomAttitude = new Random();
@@ -43,7 +44,7 @@ namespace LemonadeStand
             satisfiedCustomerCount = 0;
             foreach (Customer customer in customers.ToList())
             {
-                if (customer.isPleased)
+                if (customer.hasPurchasedToday && customer.isPleased)
                 {
                     satisfiedCustomerCount += 1;
                     customer.friendlyness += 3;
@@ -53,6 +54,25 @@ namespace LemonadeStand
                         customer.awareOfLemonadeStand += 1;
                         customer.friendlyness = 10;
                     }
+                }
+                if (customer.hasPurchasedToday && !(customer.isPleased))
+                {
+                    customer.friendlyness -= 5;
+                    if (customer.friendlyness < 1)
+                    {
+                        customer.friendlyness = 1;
+                    }
+                    customer.awareOfLemonadeStand -= 5;
+                    if (customer.awareOfLemonadeStand < 1)
+                    {
+                        customer.awareOfLemonadeStand = 1;
+                    }
+                }
+                customer.hasPurchasedToday = false;
+                customer.isPleased = false;
+                if (randomAttitude.Next(4, 11) <= minimumForCustomerRemoval && customer.friendlyness == 1)
+                {
+                    customers.Remove(customer);
                 }
             }
             customers = AddPopularCustomers(customers, userInterface);

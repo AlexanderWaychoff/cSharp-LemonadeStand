@@ -38,7 +38,7 @@ namespace LemonadeStand
             }
             return customers;
         }
-        public List<Customer> CalculateAddedCustomers(List<Customer> customers)
+        public List<Customer> CalculateAddedCustomers(List<Customer> customers, Interface userInterface)
         {
             satisfiedCustomerCount = 0;
             foreach (Customer customer in customers.ToList())
@@ -55,18 +55,20 @@ namespace LemonadeStand
                     }
                 }
             }
-            return AddSatisfiedCustomers(customers, satisfiedCustomerCount);
+            customers = AddPopularCustomers(customers, userInterface);
+            return AddSatisfiedCustomers(customers, satisfiedCustomerCount, userInterface);
         }
-        public List<Customer> AddSatisfiedCustomers (List<Customer> customers, double satisfiedCustomerCount)
+        public List<Customer> AddSatisfiedCustomers (List<Customer> customers, double satisfiedCustomerCount, Interface userInterface)
         {
             for (double i = Math.Floor(satisfiedCustomerCount/3); i > 0; i--)
             {
                 customer = new Customer(randomThirstiness.Next(1, 11), randomFlavor.Next(1, 11), randomAttitude.Next(5, 11), startingPopularity - randomPopularity.Next(0, 3), false);
                 customers.Add(customer);
             }
+            userInterface.DisplayAddedCustomersFromSatisfaction(satisfiedCustomerCount);
             return customers;
         }
-        public List<Customer> AddPopularCustomers(List<Customer> customers, double satisfiedCustomerCount)
+        public List<Customer> AddPopularCustomers(List<Customer> customers, Interface userInterface)
         {
             popularCustomerCount = 0;
             for (int i = 0; i < customers.Count; i++)
@@ -81,6 +83,7 @@ namespace LemonadeStand
                     }
                 }
             }
+            userInterface.DisplayAddedCustomersFromPopularity(popularCustomerCount);
             return customers;
         }
     }

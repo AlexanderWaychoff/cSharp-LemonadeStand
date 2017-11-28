@@ -55,6 +55,15 @@ namespace LemonadeStand
                 Console.WriteLine("\nThere are " + days + " days remaining.\n");
             }
         }
+        public void DisplayAddedCustomersFromPopularity(double popularCustomerCount)
+        {
+            Console.WriteLine("\nWord has spread from customers pleased about your lemonade stand.  " + popularCustomerCount + " new customers will stop by the next day to check out your lemonade stand.\n");
+
+        }
+        public void DisplayAddedCustomersFromSatisfaction (double satisfiedCustomerCount)
+        {
+            Console.WriteLine("\nA general murmur of approval about your lemonade quality has spread.  " + Math.Floor(satisfiedCustomerCount / 3) + " new customers will stop by the next day to check out your lemonade stand.\n");
+        }
         public int GetPlayTime()
         {
             Func<string, bool> playTimeRange = VerifyTime;

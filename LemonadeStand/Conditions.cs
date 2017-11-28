@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Conditions
+    public class Conditions
     {
         public string cloudiness;
         public bool isRaining;
-        public int temperature; 
-        public Conditions(string cloudiness, bool isRaining, int temperature)
+        public double temperature; 
+        public Conditions(string cloudiness, bool isRaining, double temperature)
         {
             this.cloudiness = cloudiness;
             this.isRaining = isRaining;

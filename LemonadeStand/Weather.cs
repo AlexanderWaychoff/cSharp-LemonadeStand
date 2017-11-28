@@ -18,7 +18,7 @@ namespace LemonadeStand
 
         private string cloudiness;
         private bool isRaining;
-        private int temperature;
+        private double temperature;
         Random randomNumber = new Random();
         Conditions todaysWeather = new Conditions("slightly cloudy", false, 75);
         public Weather()
@@ -78,10 +78,10 @@ namespace LemonadeStand
             }
             return false;
         }
-        public int DetermineTemperature(bool isRaining)
+        public double DetermineTemperature(bool isRaining)
         {
-            int yesterdayTemperature = todaysWeather.temperature;
-            int temperature = randomNumber.Next(minTemperature, maxTemperature);
+            double yesterdayTemperature = todaysWeather.temperature;
+            double temperature = randomNumber.Next(minTemperature, maxTemperature);
 
             //if (Math.Abs(yesterdayTemperature - temperature) >= 20)//20 is max temperature change in a single day
             //{ add later if temperature fluctuates too much

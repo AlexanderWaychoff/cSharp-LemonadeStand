@@ -15,19 +15,61 @@ namespace LemonadeStand
         public int startingPopularity = 3;  //how aware customers are at the start of the game, fluctuating down to 1
         public double satisfiedCustomerCount;
         public double popularCustomerCount;
+        public double customerChance;
         public int minimumForCustomerRemoval = 6; //random number between 4-10, if equal to this or less will remove customer from list
         Random randomThirstiness = new Random();
         Random randomFlavor = new Random();
         Random randomAttitude = new Random();
         Random randomPopularity = new Random();
+        Random randomRainValue = new Random();
+        Random randomCustomerChance = new Random();
 
         public BusinessTransactions()
         {
 
         }
-        public void RunCustomerPurchases()
+        public double CalculateBaseCustomerChance(List<Customer> customers, Conditions dailyWeather)
         {
+            customerChance = (dailyWeather.temperature/2)/100;   //divide by 100 to make percentage
+            if (dailyWeather.isRaining)
+            {
+                customerChance -= randomRainValue.Next(15, 35);
+            }
+            if (customerChance < 0)
+            {
+                customerChance = 0;
+            }
+            return customerChance;
+        }
+        public void RunCustomerPurchases(List<Customer> customers, Inventory userInventory, Conditions dailyWeather, Recipe recipe)
+        {
+            customerChance = CalculateBaseCustomerChance(customers, dailyWeather);
+            foreach (Customer customer in customers.ToList())
+            {
+                if(randomCustomerChance.Next(101) < customerChance)
+                {
+                    userInventory.moneyCount += recipe.price;
+                    customer.hasPurchasedToday = true;
+                    testCustomerSatisfaction(customer, dailyWeather, recipe);
+                }
+            }
 
+        }
+        public Customer testCustomerSatisfaction(Customer customer, Conditions dailyWeather, Recipe recipe)
+        {
+            if (customer.flavorPreference < 5)
+            {
+
+            }
+            else if (customer.flavorPreference > 5)
+            {
+
+            }
+            else
+            {
+
+            }
+            return customer;
         }
         public List<Customer> SetUpCustomerBase()
         {
@@ -55,7 +97,7 @@ namespace LemonadeStand
                         customer.friendlyness = 10;
                     }
                 }
-                if (customer.hasPurchasedToday && !(customer.isPleased))
+                if (customer.hasPurchasedToday && customer.isDispleased)
                 {
                     customer.friendlyness -= 5;
                     if (customer.friendlyness < 1)
@@ -70,6 +112,7 @@ namespace LemonadeStand
                 }
                 customer.hasPurchasedToday = false;
                 customer.isPleased = false;
+                customer.isDispleased = false;
                 if (randomAttitude.Next(4, 11) <= minimumForCustomerRemoval && customer.friendlyness == 1)
                 {
                     customers.Remove(customer);

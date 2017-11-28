@@ -13,6 +13,8 @@ namespace LemonadeStand
 
         public int startingCustomers = 100; //how many customers the player automatically starts with
         public int startingPopularity = 3;  //how aware customers are at the start of the game, fluctuating down to 1
+        public double satisfiedCustomerCount;
+        public double popularCustomerCount;
         Random randomThirstiness = new Random();
         Random randomFlavor = new Random();
         Random randomAttitude = new Random();
@@ -31,8 +33,53 @@ namespace LemonadeStand
             for (int i = startingCustomers; i > 0; i--)
             {
 
-                customer = new Customer(randomThirstiness.Next(1,11), randomFlavor.Next(1,11), randomAttitude.Next(5,11), startingPopularity - randomPopularity.Next(0,3));
+                customer = new Customer(randomThirstiness.Next(1,11), randomFlavor.Next(1,11), randomAttitude.Next(4,11), startingPopularity - randomPopularity.Next(0,3), false);
                 customers.Add(customer);
+            }
+            return customers;
+        }
+        public List<Customer> CalculateAddedCustomers(List<Customer> customers)
+        {
+            satisfiedCustomerCount = 0;
+            foreach (Customer customer in customers.ToList())
+            {
+                if (customer.isPleased)
+                {
+                    satisfiedCustomerCount += 1;
+                    customer.friendlyness += 3;
+                    customer.awareOfLemonadeStand += 1;
+                    if (customer.friendlyness > 10)
+                    {
+                        customer.awareOfLemonadeStand += 1;
+                        customer.friendlyness = 10;
+                    }
+                }
+            }
+            return AddSatisfiedCustomers(customers, satisfiedCustomerCount);
+        }
+        public List<Customer> AddSatisfiedCustomers (List<Customer> customers, double satisfiedCustomerCount)
+        {
+            for (double i = Math.Floor(satisfiedCustomerCount/3); i > 0; i--)
+            {
+                customer = new Customer(randomThirstiness.Next(1, 11), randomFlavor.Next(1, 11), randomAttitude.Next(5, 11), startingPopularity - randomPopularity.Next(0, 3), false);
+                customers.Add(customer);
+            }
+            return customers;
+        }
+        public List<Customer> AddPopularCustomers(List<Customer> customers, double satisfiedCustomerCount)
+        {
+            popularCustomerCount = 0;
+            for (int i = 0; i < customers.Count; i++)
+            {
+                if (customer.awareOfLemonadeStand > 5)
+                {
+                    for (int j = 5; j < customer.awareOfLemonadeStand; j++)
+                    {
+                        popularCustomerCount += 1;
+                        customer = new Customer(randomThirstiness.Next(1, 11), randomFlavor.Next(1, 11), randomAttitude.Next(6, 11), startingPopularity - randomPopularity.Next(0, 3), false);
+                        customers.Add(customer);
+                    }
+                }
             }
             return customers;
         }

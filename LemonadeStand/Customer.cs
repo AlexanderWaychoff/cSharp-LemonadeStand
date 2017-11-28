@@ -12,13 +12,15 @@ namespace LemonadeStand
         public int flavorPreference; //1-10, 1 prefers sour, 10 prefers sweet
         public int friendlyness;    //1-10, 1 is grumpy, 10 is happy
         public int awareOfLemonadeStand;    //1-10, 1 = stand is unpopular, 10 = stand is very popular; by default starts low and gradually goes up
+        public bool isPleased = false;
 
-        public Customer(int thirstiness, int flavorPreference, int friendlyness, int awareOfLemonadeStand)
+        public Customer(int thirstiness, int flavorPreference, int friendlyness, int awareOfLemonadeStand, bool isPleased)
         {
             this.thirstiness = thirstiness;
             this.flavorPreference = flavorPreference;
             this.friendlyness = friendlyness;
             this.awareOfLemonadeStand = awareOfLemonadeStand;
+            this.isPleased = isPleased;
         }
     }
 }

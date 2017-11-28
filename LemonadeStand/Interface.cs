@@ -46,7 +46,14 @@ namespace LemonadeStand
         }
         public void DisplayRemainingDays(int days)
         {
-            Console.WriteLine("\nThere are " + days + " days remaining.\n");
+            if (days == 1)
+            {
+                Console.WriteLine("/n**This is the final day of your lemonade stand.**\n");
+            }
+            else
+            {
+                Console.WriteLine("\nThere are " + days + " days remaining.\n");
+            }
         }
         public int GetPlayTime()
         {

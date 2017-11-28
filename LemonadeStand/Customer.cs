@@ -12,6 +12,7 @@ namespace LemonadeStand
         public int flavorPreference; //1-10, 1 prefers sour, 10 prefers sweet
         public int friendlyness;    //1-10, 1 is grumpy, 10 is happy
         public int awareOfLemonadeStand;    //1-10, 1 = stand is unpopular, 10 = stand is very popular; by default starts low and gradually goes up
+        public double percentChanceOfBuying;
         public bool isPleased = false;
         public bool hasPurchasedToday;
         public bool isDispleased;
@@ -25,6 +26,7 @@ namespace LemonadeStand
             this.isPleased = isPleased;
             this.hasPurchasedToday = false;
             this.isDispleased = false;
+            this.percentChanceOfBuying = 5;
         }
     }
 }

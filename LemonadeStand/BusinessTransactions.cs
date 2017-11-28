@@ -16,6 +16,7 @@ namespace LemonadeStand
         public double satisfiedCustomerCount;
         public double popularCustomerCount;
         public double customerChance;
+        public double baseExtraCustomerChance = 7;  //7% chance increase per extra friendliness of a customer stopping by
         public int minimumForCustomerRemoval = 6; //random number between 4-10, if equal to this or less will remove customer from list
         Random randomThirstiness = new Random();
         Random randomFlavor = new Random();
@@ -28,25 +29,47 @@ namespace LemonadeStand
         {
 
         }
-        public double CalculateBaseCustomerChance(List<Customer> customers, Conditions dailyWeather)
+        public List<Customer> CalculateBaseCustomerChance(List<Customer> customers, Conditions dailyWeather)
         {
             customerChance = (dailyWeather.temperature/2)/100;   //divide by 100 to make percentage
             if (dailyWeather.isRaining)
             {
                 customerChance -= randomRainValue.Next(15, 35);
             }
-            if (customerChance < 0)
+            if (customerChance < 5)
             {
-                customerChance = 0;
+                customerChance = 5;
             }
-            return customerChance;
+            foreach (Customer customer in customers.ToList())
+            {
+                customer.percentChanceOfBuying = customerChance;
+            }
+            return customers;
+        }
+        public List<Customer> CalculateExtraCustomerChance(List<Customer> customers, Conditions dailyWeather)
+        {
+            foreach (Customer customer in customers.ToList())
+            {
+                if (customer.friendlyness > 5)
+                {
+                    customer.percentChanceOfBuying += baseExtraCustomerChance * (customer.friendlyness - 5);
+                }
+            }
+            return customers;
+        }
+        public List<Customer> CalculateCostChance(List<Customer> customers, Conditions dailyWeather, Recipe recipe)
+        {
+
+            return customers;
         }
         public void RunCustomerPurchases(List<Customer> customers, Inventory userInventory, Conditions dailyWeather, Recipe recipe)
         {
-            customerChance = CalculateBaseCustomerChance(customers, dailyWeather);
+            customers = CalculateBaseCustomerChance(customers, dailyWeather);
+            customers = CalculateExtraCustomerChance(customers, dailyWeather);
+            customers = CalculateCostChance(customers, dailyWeather, recipe);
             foreach (Customer customer in customers.ToList())
             {
-                if(randomCustomerChance.Next(101) < customerChance)
+                if(randomCustomerChance.Next(101) <= customerChance)
                 {
                     userInventory.moneyCount += recipe.price;
                     customer.hasPurchasedToday = true;
@@ -57,6 +80,24 @@ namespace LemonadeStand
         }
         public Customer testCustomerSatisfaction(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
+            int customerSatisfaction = 0;
+            customerSatisfaction += testCustomerFlavor(customer, dailyWeather, recipe);
+            customerSatisfaction += testCustomerPricing(customer, dailyWeather, recipe);
+            customerSatisfaction += testCustomerBeverageTemperature(customer, dailyWeather, recipe);
+            if (customerSatisfaction >= 2)
+            {
+                customer.isPleased = true;
+            }
+            if (customerSatisfaction < 0)
+            {
+                customer.isDispleased = true;
+            }
+            return customer;
+        }
+        public int testCustomerFlavor(Customer customer, Conditions dailyWeather, Recipe recipe)
+        {
+            double weatherFlavor;
+
             if (customer.flavorPreference < 5)
             {
 
@@ -69,7 +110,15 @@ namespace LemonadeStand
             {
 
             }
-            return customer;
+            return 0;
+        }
+        public int testCustomerPricing(Customer customer, Conditions dailyWeather, Recipe recipe)
+        {
+            return 0;
+        }
+        public int testCustomerBeverageTemperature(Customer customer, Conditions dailyWeather, Recipe recipe)
+        {
+            return 0;
         }
         public List<Customer> SetUpCustomerBase()
         {

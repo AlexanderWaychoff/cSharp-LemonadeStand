@@ -11,7 +11,7 @@ namespace LemonadeStand
     {
         public static int minimumDays = 7;
         public static int maximumDays = 21;
-        private int gameDays;
+        public int gameDays;
         private List<string> sunsetImage;
         public Time(int gameDays)
         {
@@ -20,7 +20,6 @@ namespace LemonadeStand
         public void PassageOfDay()
         {
             sunsetImage = new List<string>();
-            Console.Clear();
             const int nCountDown = 12;
 
             for (int i = nCountDown; i >= 0; i--)

@@ -14,8 +14,11 @@ namespace LemonadeStand
         Weather dailyForecast = new Weather();
         Recipe recipe = new Recipe(4, 4, 20, 1.00);
         Conditions todaysForecast;
-        string userInput;
         Inventory userInventory;
+        BusinessTransactions customerSales = new BusinessTransactions();
+
+        string userInput;
+        List<Customer> customers = new List<Customer>();
         public Game()
         {
 
@@ -35,27 +38,30 @@ namespace LemonadeStand
         }
         public void PlayGame(Time gameLength)
         {
-            TakeTurn(gameLength);
-            TakeTurn(gameLength);
+            customers = customerSales.SetUpCustomerBase();
+            TakeTurn(gameLength, todaysForecast, customers);
 
-            TakeTurn(gameLength);
-            TakeTurn(gameLength);
 
-            gameLength.PassageOfDay();
-            todaysForecast = dailyForecast.GetTheDaysWeather();
+            
         }
-        public void TakeTurn(Time gameLength)
+        public void TakeTurn(Time gameLength, Conditions todaysForecast, List<Customer> customers)
         {
-            userInventory = player.ObtainInventoryStatus();
-            store = ChangeStorePrices();
-            userInput = userInterface.AskWhatToDo(userInventory, player, store, recipe);
-            player.AgeLemons(userInventory);
-            player.AnnounceIceMeltage(userInventory);
-            //userInterface.CheckWhatToDo(userInput, userInventory, player, store);
+            for (int i = gameLength.gameDays; i > 0; i--)
+            {
+                userInterface.ClearScreen();
+                gameLength.PassageOfDay();
+                userInterface.DisplayRemainingDays(i);
+                todaysForecast = dailyForecast.GetTheDaysWeather();
+                userInventory = player.ObtainInventoryStatus();
+                store = ChangeStorePrices();
+                userInput = userInterface.AskWhatToDo(userInventory, player, store, recipe);
+
+                player.AgeLemons(userInventory);
+                player.AnnounceIceMeltage(userInventory);
+            }
         }
         public Store ChangeStorePrices()
         {
-            //store = store.UpdateStore();
             return store.UpdateStore();
         }
     }

@@ -29,6 +29,10 @@ namespace LemonadeStand
         {
 
         }
+        public void ClearScreen()
+        {
+            Console.Clear();
+        }
         public void DisplayRules()
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -39,6 +43,10 @@ namespace LemonadeStand
         public void DisplayRecipe(Recipe recipe)
         {
             Console.WriteLine("\nFor each pitcher of lemonade you are using: " + recipe.lemonsUsed + " lemon(s), " + recipe.sugarUsed + " cup(s) of sugar, and " + recipe.iceUsed + " ice cube(s).  You are currently charging $" + recipe.price.ToString("0.00") + " per cup.\n");
+        }
+        public void DisplayRemainingDays(int days)
+        {
+            Console.WriteLine("\nThere are " + days + " days remaining.\n");
         }
         public int GetPlayTime()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,11 @@ namespace LemonadeStand
         public int ConvertToInt(string character)
         {
             characterNumber = Convert.ToInt32(character);
+            return characterNumber;
+        }
+        public double ConvertToDecimal(string character)
+        {
+            double characterNumber = double.Parse(character);
             return characterNumber;
         }
         public string AskWhatToDo(Inventory userInventory, Player player, Store store, Recipe recipe)
@@ -114,7 +120,7 @@ namespace LemonadeStand
         {
             Func<string, bool> whichToChange = VerifyWhichToChange;
             DisplayRecipe(recipe);
-            userInput = VerifyInput("Would you like to change the " + priceOption + " per cup?  Or one of the ingredients: '" + lemonsOption + "', '" + sugarOption + "', or '" + iceOption + "'?  Or to go back and not change anything to this recipe, enter '" + cancelOption + "'.\n", whichToChange);
+            userInput = VerifyInput("Would you like to change the '" + priceOption + "' per cup?  Or one of the ingredients: '" + lemonsOption + "', '" + sugarOption + "', or '" + iceOption + "'?  Or to go back and not change anything to this recipe, enter '" + cancelOption + "'.\n", whichToChange);
             ChangeRecipe(userInput, userInventory, player, store, recipe);
         }
         public void ChangeRecipe(string userInput, Inventory userInventory, Player player, Store store, Recipe recipe)
@@ -141,8 +147,8 @@ namespace LemonadeStand
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == priceOption)
-            {//change so price can be put in with cents; only accepts whole dollars right now
-                userNumber = ConvertToInt(VerifyInput("\nHow much would you like to charge per cup?  Enter a number between 0.01 and 5.00 (price will affect demand and a customer's willingness to purchase your lemonade based on weather conditions)\n", check5Dollars));
+            {
+                userNumber = ConvertToDecimal(VerifyInput("\nHow much would you like to charge per cup?  Enter a number between 0.01 and 5.00 (price will affect demand and a customer's willingness to purchase your lemonade based on weather conditions)\n", check5Dollars));
                 recipe.price = userNumber;
                 CheckRecipe(userInventory, player, store, recipe);
             }
@@ -224,7 +230,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool Verify1To50(string userInput)   //min\max for lemon\sugar per pitcher
+        public bool Verify1To50(string userInput)   //min\max for ice per pitcher
         {
             if (userInput.All(char.IsDigit))
             {
@@ -236,12 +242,13 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool VerifyUpTo5(string userInput)
+        public bool VerifyUpTo5(string userInput)   //min\max price per cup
         {
-            if (userInput.All(char.IsDigit))
+            double inputToDouble;
+            if (double.TryParse(userInput, out inputToDouble))
             {
-                int inputToInt = Convert.ToInt32(userInput);
-                if (inputToInt >= 0.01 && inputToInt <= 5.00)
+                inputToDouble = double.Parse(userInput);
+                if (inputToDouble >= 0.01 && inputToDouble <= 5.00)
                 {
                     return true;
                 }

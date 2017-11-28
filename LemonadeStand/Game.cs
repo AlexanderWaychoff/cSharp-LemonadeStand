@@ -40,25 +40,26 @@ namespace LemonadeStand
         {
             customers = customerSales.SetUpCustomerBase();
             TakeTurn(gameLength, todaysForecast, customers);
-
-
-            
+            userInterface.ClearScreen();
         }
         public void TakeTurn(Time gameLength, Conditions todaysForecast, List<Customer> customers)
         {
-            for (int i = gameLength.gameDays; i > 0; i--)
+            for (int i = 5; i > 0; i--)   //gameLength.gameDays
             {
-                userInterface.ClearScreen();
-                gameLength.PassageOfDay();
                 userInterface.DisplayRemainingDays(i);
                 todaysForecast = dailyForecast.GetTheDaysWeather();
+                userInterface.DisplayTotalCustomers(customers);
                 userInventory = player.ObtainInventoryStatus();
                 store = ChangeStorePrices();
                 userInput = userInterface.AskWhatToDo(userInventory, player, store, recipe);
+                customers = customerSales.RunCustomerPurchases(customers, userInventory, todaysForecast, recipe);
 
                 customers = customerSales.CalculateAddedCustomers(customers, userInterface);
+                userInterface.ClearScreen();
+                gameLength.PassageOfDay();
                 player.AgeLemons(userInventory);
                 player.AnnounceIceMeltage(userInventory);
+
             }
         }
         public Store ChangeStorePrices()

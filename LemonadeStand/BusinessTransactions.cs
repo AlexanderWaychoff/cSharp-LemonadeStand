@@ -36,7 +36,7 @@ namespace LemonadeStand
         }
         public List<Customer> CalculateBaseCustomerChance(List<Customer> customers, Conditions dailyWeather)
         {
-            customerChance = (dailyWeather.temperature/2)/100;   //divide by 100 to make percentage
+            customerChance = (dailyWeather.temperature/2);   //divide by 100 to make percentage
             if (dailyWeather.isRaining)
             {
                 customerChance -= randomRainValue.Next(15, 35);
@@ -45,7 +45,8 @@ namespace LemonadeStand
             {
                 customerChance = 5;
             }
-            foreach (Customer customer in customers.ToList())
+            for (int i = customers.Count; i > 0; i--)
+            //foreach (Customer customer in customers.ToList())
             {
                 customer.percentChanceOfBuying = customerChance;
             }
@@ -53,7 +54,8 @@ namespace LemonadeStand
         }
         public List<Customer> CalculateExtraCustomerChance(List<Customer> customers, Conditions dailyWeather)
         {
-            foreach (Customer customer in customers.ToList())
+            for (int i = customers.Count; i > 0; i--)
+            //foreach (Customer customer in customers.ToList())
             {
                 if (customer.friendlyness > 5)
                 {
@@ -70,27 +72,30 @@ namespace LemonadeStand
                 storeRandomValue = randomRainValue.Next(20, 51);
             }
             customerChance = (recipe.price - Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100)/10; // every /10 cents increases or decreases customer chance
-            foreach (Customer customer in customers.ToList())
+            for (int i = customers.Count; i > 0; i--)
+            //foreach (Customer customer in customers.ToList())
             {
                 customer.percentChanceOfBuying += customerChance;
             }
             return customers;
         }
-        public void RunCustomerPurchases(List<Customer> customers, Inventory userInventory, Conditions dailyWeather, Recipe recipe)
+        public List<Customer> RunCustomerPurchases(List<Customer> customers, Inventory userInventory, Conditions dailyWeather, Recipe recipe)
         {
             customers = CalculateBaseCustomerChance(customers, dailyWeather);
             customers = CalculateExtraCustomerChance(customers, dailyWeather);
             customers = CalculateCostChance(customers, dailyWeather, recipe);
-            foreach (Customer customer in customers.ToList())
+            for (int i = customers.Count; i > 0; i--)
+            //foreach (Customer customer in customers.ToList())
             {
-                if(randomCustomerChance.Next(101) <= customerChance)
+                if(randomCustomerChance.Next(101) <= customer.percentChanceOfBuying)
                 {
                     userInventory.moneyCount += recipe.price;
+
                     customer.hasPurchasedToday = true;
-                    testCustomerSatisfaction(customer, dailyWeather, recipe);
+                    customer = testCustomerSatisfaction(customer, dailyWeather, recipe);
                 }
             }
-
+            return customers;
         }
         public Customer testCustomerSatisfaction(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
@@ -170,7 +175,8 @@ namespace LemonadeStand
         public List<Customer> CalculateAddedCustomers(List<Customer> customers, Interface userInterface)
         {
             satisfiedCustomerCount = 0;
-            foreach (Customer customer in customers.ToList())
+            for (int i = customers.Count; i > 0; i--)
+            //foreach (Customer customer in customers.ToList())
             {
                 if (customer.hasPurchasedToday && customer.isPleased)
                 {
@@ -214,7 +220,7 @@ namespace LemonadeStand
                 customer = new Customer(randomThirstiness.Next(1, 11), randomFlavor.Next(1, 11), randomAttitude.Next(5, 11), startingPopularity - randomPopularity.Next(0, 3), false);
                 customers.Add(customer);
             }
-            userInterface.DisplayAddedCustomersFromSatisfaction(satisfiedCustomerCount);
+            userInterface.DisplayAddedCustomersFromSatisfaction(Math.Floor(satisfiedCustomerCount));
             return customers;
         }
         public List<Customer> AddPopularCustomers(List<Customer> customers, Interface userInterface)

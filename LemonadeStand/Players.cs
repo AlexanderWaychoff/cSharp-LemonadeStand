@@ -14,7 +14,7 @@ namespace LemonadeStand
 
         double priceMultiplier;
 
-        Inventory playerInventory = new Inventory(0, 0, 0, 0); //starting items count
+        Inventory playerInventory = new Inventory(900, 900, 900, 900); //starting items count
 
         List<Lemon> totalLemons = new List<Lemon>();
         Lemon lemon;

@@ -57,12 +57,21 @@ namespace LemonadeStand
         }
         public void DisplayAddedCustomersFromPopularity(double popularCustomerCount)
         {
-            Console.WriteLine("\nWord has spread from customers pleased about your lemonade stand.  " + popularCustomerCount + " new customers will stop by the next day to check out your lemonade stand.\n");
-
+            if (popularCustomerCount >= 1)
+            {
+                Console.WriteLine("\nWord has spread from customers pleased about your lemonade stand.  " + popularCustomerCount + " new customers will stop by the next day to check out your lemonade stand.\n");
+            }
         }
         public void DisplayAddedCustomersFromSatisfaction (double satisfiedCustomerCount)
         {
-            Console.WriteLine("\nA general murmur of approval about your lemonade quality has spread.  " + Math.Floor(satisfiedCustomerCount / 3) + " new customers will stop by the next day to check out your lemonade stand.\n");
+            if (satisfiedCustomerCount >= 1)
+            {
+                Console.WriteLine("\nA murmur of general approval about your lemonade quality has spread.  " + Math.Floor(satisfiedCustomerCount / 3) + " new customers will stop by the next day to check out your lemonade stand.\n");
+            }
+        }
+        public void DisplayTotalCustomers (List<Customer> customers)
+        {
+            Console.WriteLine("\nYou have " + customers.Count + " potential customers.\n");
         }
         public int GetPlayTime()
         {

@@ -16,14 +16,19 @@ namespace LemonadeStand
         public double satisfiedCustomerCount;
         public double popularCustomerCount;
         public double customerChance;
+        public double baseIceCubePreference = 20;
+        public double baseCustomerPayment = 0.85;   //default what a customer will pay on a average weather day
         public double baseExtraCustomerChance = 7;  //7% chance increase per extra friendliness of a customer stopping by
         public int minimumForCustomerRemoval = 6; //random number between 4-10, if equal to this or less will remove customer from list
+        public double customerCentQuality = 0.50;
+        public double customerIceQuality = 7;
         Random randomThirstiness = new Random();
         Random randomFlavor = new Random();
         Random randomAttitude = new Random();
         Random randomPopularity = new Random();
         Random randomRainValue = new Random();
         Random randomCustomerChance = new Random();
+        public double storeRandomValue;
 
         public BusinessTransactions()
         {
@@ -59,7 +64,16 @@ namespace LemonadeStand
         }
         public List<Customer> CalculateCostChance(List<Customer> customers, Conditions dailyWeather, Recipe recipe)
         {
-
+            storeRandomValue = 0;
+            if (dailyWeather.isRaining)
+            {
+                storeRandomValue = randomRainValue.Next(20, 51);
+            }
+            customerChance = (recipe.price - Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100)/10; // every /10 cents increases or decreases customer chance
+            foreach (Customer customer in customers.ToList())
+            {
+                customer.percentChanceOfBuying += customerChance;
+            }
             return customers;
         }
         public void RunCustomerPurchases(List<Customer> customers, Inventory userInventory, Conditions dailyWeather, Recipe recipe)
@@ -96,28 +110,51 @@ namespace LemonadeStand
         }
         public int testCustomerFlavor(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
-            double weatherFlavor;
-
             if (customer.flavorPreference < 5)
             {
-
+                if (recipe.lemonsUsed > 10 - customer.flavorPreference && recipe.sugarUsed <= 1 + customer.flavorPreference)
+                {
+                    return 1;
+                }
             }
             else if (customer.flavorPreference > 5)
             {
-
+                if (recipe.sugarUsed > 10 - customer.flavorPreference && recipe.lemonsUsed <= 1 + customer.flavorPreference)
+                {
+                    return 1;
+                }
             }
             else
             {
-
+                if (recipe.lemonsUsed == customer.flavorPreference && recipe.sugarUsed == customer.flavorPreference)
+                {
+                    return 1;
+                }
             }
             return 0;
         }
         public int testCustomerPricing(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
-            return 0;
+            if ((recipe.price - Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 > customerCentQuality)
+            {
+                return -1;  //customer paid more than 50 cents for the lemonade, reduce satisfaction
+            }
+            else if ((recipe.price - Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 < customerCentQuality)
+            {
+                return 1;   //customer paid less than 50 cents, increase satisfaction
+            }
+                return 0;
         }
         public int testCustomerBeverageTemperature(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
+            if (baseIceCubePreference * (dailyWeather.temperature / 100) <= recipe.iceUsed + 3 && baseIceCubePreference * (dailyWeather.temperature / 100) >= recipe.iceUsed - 3)
+            {
+                return 1;
+            }
+            else if (baseIceCubePreference * (dailyWeather.temperature / 100) >= recipe.iceUsed + customerIceQuality || baseIceCubePreference * (dailyWeather.temperature / 100) <= recipe.iceUsed - customerIceQuality)
+            {
+                return -1;
+            }
             return 0;
         }
         public List<Customer> SetUpCustomerBase()

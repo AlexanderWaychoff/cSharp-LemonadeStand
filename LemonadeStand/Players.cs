@@ -14,7 +14,7 @@ namespace LemonadeStand
 
         double priceMultiplier;
 
-        Inventory playerInventory = new Inventory(0, 0, 0, 0); //starting items count
+        Inventory userInventory = new Inventory(0, 0, 0, 0); //starting items count
 
         List<Lemon> totalLemons = new List<Lemon>();
         Lemon lemon;
@@ -31,7 +31,7 @@ namespace LemonadeStand
         }
         public Inventory ObtainInventoryStatus()
         {
-            return playerInventory;
+            return userInventory;
         }
         public double CalculateLemonSugarMultiplier (Store store, double amountBought)
         {
@@ -74,13 +74,14 @@ namespace LemonadeStand
         public void BuyLemons(Inventory userInventory, Store store, double boughtLemons)
         {
             priceMultiplier = CalculateLemonSugarMultiplier(store, boughtLemons);
-            if (playerInventory.moneyCount - store.lemons10 * priceMultiplier < 0)
+            if (this.userInventory.moneyCount - store.lemons10 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtLemons + " lemons.**\n");
             }
             else
             {
-                playerInventory.moneyCount -= store.lemons10 * priceMultiplier;
+                userInventory.moneyCount -= store.lemons10 * priceMultiplier;
+                userInventory.overallProfit -= store.lemons10 * priceMultiplier;
                 for (double i = boughtLemons; i > 0; i--)
                 {
                     lemon = new Lemon();
@@ -92,13 +93,14 @@ namespace LemonadeStand
         public void BuySugar(Inventory userInventory, Store store, double boughtSugar)
         {
             priceMultiplier = CalculateLemonSugarMultiplier(store, boughtSugar);
-            if (playerInventory.moneyCount - store.sugar10 * priceMultiplier < 0)
+            if (this.userInventory.moneyCount - store.sugar10 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtSugar + " cups of sugar.**\n");
             }
             else
             {
-                playerInventory.moneyCount -= store.sugar10 * priceMultiplier;
+                userInventory.moneyCount -= store.sugar10 * priceMultiplier;
+                userInventory.overallProfit -= store.sugar10 * priceMultiplier;
                 for (double i = boughtSugar; i > 0; i--)
                 {
                     sugar = new Sugar();
@@ -110,13 +112,14 @@ namespace LemonadeStand
         public void BuyIce(Inventory userInventory, Store store, double boughtIce)
         {
             priceMultiplier = CalculateIceCupsMultiplier(store, boughtIce);
-            if (playerInventory.moneyCount - store.ice100 * priceMultiplier < 0)
+            if (this.userInventory.moneyCount - store.ice100 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtIce + " ice cubes.**\n");
             }
             else
             {
-                playerInventory.moneyCount -= store.ice100 * priceMultiplier;
+                userInventory.moneyCount -= store.ice100 * priceMultiplier;
+                userInventory.overallProfit -= store.ice100 * priceMultiplier;
                 for (double i = boughtIce; i > 0; i--)
                 {
                     iceCube = new Ice();
@@ -128,13 +131,14 @@ namespace LemonadeStand
         public void BuyCups(Inventory userInventory, Store store, double boughtCups)
         {
             priceMultiplier = CalculateIceCupsMultiplier(store, boughtCups);
-            if (playerInventory.moneyCount - store.cups100 * priceMultiplier < 0)
+            if (this.userInventory.moneyCount - store.cups100 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtCups + " cups.**\n");
             }
             else
             {
-                playerInventory.moneyCount -= store.cups100 * priceMultiplier;
+                userInventory.moneyCount -= store.cups100 * priceMultiplier;
+                userInventory.overallProfit -= store.cups100 * priceMultiplier;
                 for (double i = boughtCups; i > 0; i--)
                 {
                     cup = new Cup();
@@ -271,8 +275,11 @@ namespace LemonadeStand
         }
         public void RemoveUsedCup(Recipe recipe, Inventory userInventory)
         {
-            userInventory.cupsCount -= 1;
-            totalCups.RemoveAt(0);
+            if (userInventory.cupsCount > 0)
+            {
+                userInventory.cupsCount -= 1;
+                totalCups.RemoveAt(0);//error if 0 cups are bought and user tries to run stand
+            }
         }
     }
 }

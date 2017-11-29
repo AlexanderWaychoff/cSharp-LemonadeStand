@@ -30,11 +30,6 @@ namespace LemonadeStand
             this.cupsCount = startingCups;
             this.dailyProfit = 0;
             this.overallProfit = 0;
-            //Lemon lemons = new Lemon();
-            //Sugar sugar = new Sugar();
-            //Ice ice = new Ice();
-            //Cup cups = new Cup();
-
         }
         public double CalculateDailyProfit(Inventory userInventory, Interface userInterface)
         {
@@ -46,10 +41,10 @@ namespace LemonadeStand
             userInventory.overallProfit += userInventory.dailyProfit;
             return userInventory.overallProfit;
         }
-        public void ReduceOverallProfit(Inventory userInventory)
-        {
-            userInventory.overallProfit -= 0;//calculate based on stock costs
-        }
+        //public void ReduceOverallProfit(Inventory userInventory)
+        //{
+        //    userInventory.overallProfit -= 0;//subtract based on stock expenses
+        //}
         
     }
 }

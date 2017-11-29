@@ -127,6 +127,7 @@ namespace LemonadeStand
             Console.WriteLine("You currently have $" + userInventory.moneyCount.ToString("0.00") + ".  Your current stock contains " + userInventory.lemonCount + " lemons, " + userInventory.sugarCount + " cups of sugar, " + userInventory.iceCount + " ice cubes and " + userInventory.cupsCount + " plastic cups.\n");
             userInput = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.\n", whatToDoOption); //finish typing options switch recipe/buy stock
             CheckWhatToDo(userInput, userInventory, player, store, recipe);
+            CheckIfEnoughStock(userInventory, player, store, recipe);
             return userInput;
         }
         public string CheckWhatToDo(string userInput, Inventory userInventory, Player player, Store store, Recipe recipe)
@@ -177,6 +178,15 @@ namespace LemonadeStand
             }
             if (userInput == cancelOption)
             {
+                AskWhatToDo(userInventory, player, store, recipe);
+            }
+        }
+        public void CheckIfEnoughStock(Inventory userInventory, Player player, Store store, Recipe recipe)
+        {
+            if (userInventory.lemonCount < recipe.lemonsUsed || userInventory.sugarCount < recipe.sugarUsed || userInventory.iceCount < recipe.iceUsed || userInventory.cupsCount == 0)
+            {
+                Console.WriteLine("\n**You don't have enough supplies to make any pitchers of lemonade!**\n\nPress any key to continue.\n");
+                Console.ReadKey();
                 AskWhatToDo(userInventory, player, store, recipe);
             }
         }

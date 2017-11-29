@@ -14,7 +14,7 @@ namespace LemonadeStand
 
         double priceMultiplier;
 
-        Inventory playerInventory = new Inventory(900, 900, 900, 900); //starting items count
+        Inventory playerInventory = new Inventory(0, 0, 0, 0); //starting items count
 
         List<Lemon> totalLemons = new List<Lemon>();
         Lemon lemon;
@@ -193,6 +193,86 @@ namespace LemonadeStand
             }
             totalIceCubes.Clear();
             userInventory.iceCount = totalIceCubes.Count;
+        }
+        public Pitcher CreatePitcher (Recipe recipe, Inventory userInventory)
+        {
+            Pitcher pitcher = new Pitcher(0, 0, 0, 0, true);
+            if (userInventory.lemonCount >= recipe.lemonsUsed && userInventory.sugarCount >= recipe.sugarUsed && userInventory.iceCount >= recipe.iceUsed)
+            {
+                pitcher = new Pitcher(RemoveUsedLemons(recipe, userInventory), RemoveUsedSugar(recipe, userInventory), RemoveUsedIce(recipe, userInventory), RemoveUsedCup(recipe, userInventory, pitcher), true);
+                RemoveUsedLemons(recipe, userInventory);
+            }
+            else
+            {
+                pitcher = new Pitcher(0, 0, 0, 0, false);
+            }
+            return pitcher;
+        }
+        public double RemoveUsedLemons(Recipe recipe, Inventory userInventory)
+        {
+            bool removeLemon = true;
+            for (double i = recipe.lemonsUsed; i > 0; i--)
+            {
+                userInventory.lemonCount -= 1;
+                removeLemon = true;
+                foreach (Lemon lemon in totalLemons.ToList())
+                {
+                    if (removeLemon)
+                    {
+                        if (lemon.spoilTime == 1)
+                        {
+                            removeLemon = false;
+                            totalLemons.Remove(lemon);
+                            break;
+                        }
+                    }
+                }
+                if (removeLemon)
+                {
+                    foreach (Lemon lemon in totalLemons.ToList())
+                    {
+                        if (removeLemon)
+                        {
+                            if (lemon.spoilTime == 2)
+                            {
+                                removeLemon = false;
+                                totalLemons.Remove(lemon);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if(removeLemon)
+                {
+                    totalLemons.RemoveAt(0);
+                }
+            }
+            return recipe.lemonsUsed;
+        }
+        public double RemoveUsedSugar(Recipe recipe, Inventory userInventory)
+        {
+            for (double i = recipe.sugarUsed; i > 0; i--)
+            {
+                userInventory.sugarCount -= 1;
+                totalSugar.RemoveAt(0);
+            }
+            return recipe.sugarUsed;
+        }
+        public double RemoveUsedIce(Recipe recipe, Inventory userInventory)
+        {
+            for (double i = recipe.iceUsed; i > 0; i--)
+            {
+                userInventory.iceCount -= 1;
+                totalIceCubes.RemoveAt(0);
+            }
+            return recipe.iceUsed;
+        }
+        public double RemoveUsedCup(Recipe recipe, Inventory userInventory, Pitcher pitcher)
+        {
+            userInventory.cupsCount -= 1;
+            totalCups.RemoveAt(0);
+            return pitcher.CupsPerPitcher;
         }
     }
 }

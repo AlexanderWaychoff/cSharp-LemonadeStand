@@ -8,10 +8,10 @@ namespace LemonadeStand
 {
     class Cup
     {
-        int cupSize;
+        //int cupSize;
         public Cup()
         {
-            this.cupSize = 1;
+            //this.cupSize = 1;
         }
     }
 }

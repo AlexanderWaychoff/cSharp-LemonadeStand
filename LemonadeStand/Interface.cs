@@ -48,11 +48,11 @@ namespace LemonadeStand
         {
             if (days == 1)
             {
-                Console.WriteLine("/n**This is the final day of your lemonade stand.**\n");
+                Console.WriteLine("**This is the final day of your lemonade stand.**\n");
             }
             else
             {
-                Console.WriteLine("\nThere are " + days + " days remaining.\n");
+                Console.WriteLine("There are " + days + " days remaining.\n");
             }
         }
         public void DisplayAddedCustomersFromPopularity(double popularCustomerCount)
@@ -62,6 +62,14 @@ namespace LemonadeStand
                 Console.WriteLine("\nWord has spread from customers pleased about your lemonade stand.  " + popularCustomerCount + " new customers will stop by the next day to check out your lemonade stand.\n");
             }
         }
+
+        internal void Pause()
+        {
+            Console.WriteLine("Press any key to continue to the next day.");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
         public void DisplayAddedCustomersFromSatisfaction (double satisfiedCustomerCount)
         {
             if (satisfiedCustomerCount >= 1)
@@ -69,9 +77,27 @@ namespace LemonadeStand
                 Console.WriteLine("\nA murmur of general approval about your lemonade quality has spread.  " + Math.Floor(satisfiedCustomerCount / 3) + " new customers will stop by the next day to check out your lemonade stand.\n");
             }
         }
+        public void DisplayCustomerSatisfaction(double amount)
+        {
+            if (amount > 0)
+            {
+                Console.WriteLine("Of the customers sold to, " + amount + " were satisfied with their drink.");
+            }
+        }
+        public void DisplayCustomerDissatisfaction(double amount)
+        {
+            if (amount > 0)
+            {
+                Console.WriteLine("Of the customers sold to, " + amount + " were disappointed with their drink.");
+            }
+        }
         public void DisplayTotalCustomers (List<Customer> customers)
         {
             Console.WriteLine("\nYou have " + customers.Count + " potential customers.\n");
+        }
+        public void DisplayTotalSales (int amount)
+        {
+            Console.WriteLine("\nYou have sold lemonade to " + amount + " customers today.\n");
         }
         public int GetPlayTime()
         {

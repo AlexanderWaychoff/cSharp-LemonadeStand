@@ -8,19 +8,28 @@ namespace LemonadeStand
 {
     public class Pitcher
     {
-        public int lemonsUsed;
-        public int sugarUsed;
-        public int iceUsed;
-        public int cupsLeft;
+        public double lemonsUsed;
+        public double sugarUsed;
+        public double iceUsed;
+        public double cupsLeft;
+        public bool hasEnoughStock;
 
-        public int cupsPerPitcher = 8;
+        private int cupsPerPitcher = 8;
 
-        public Pitcher(int lemons, int sugarCups, int iceCubes)
+        public Pitcher(double lemons, double sugarCups, double iceCubes, double cupsPerPitcher, bool hasEnoughStock)
         {
             this.lemonsUsed = lemons;
             this.sugarUsed = sugarCups;
             this.iceUsed = iceCubes;
             this.cupsLeft = cupsPerPitcher;
+            this.hasEnoughStock = hasEnoughStock;
+        }
+        public double CupsPerPitcher
+        {
+            get
+            {
+                return cupsPerPitcher;
+            }
         }
     }
 }

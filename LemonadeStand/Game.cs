@@ -52,13 +52,13 @@ namespace LemonadeStand
                 userInventory = player.ObtainInventoryStatus();
                 store = ChangeStorePrices();
                 userInput = userInterface.AskWhatToDo(userInventory, player, store, recipe);
-                customers = customerSales.RunCustomerPurchases(customers, userInventory, todaysForecast, recipe);
-
-                customers = customerSales.CalculateAddedCustomers(customers, userInterface);
                 userInterface.ClearScreen();
                 gameLength.PassageOfDay();
+                customers = customerSales.RunCustomerPurchases(customers, userInventory, todaysForecast, recipe, userInterface, player);
+                customers = customerSales.CalculateAddedCustomers(customers, userInterface);
                 player.AgeLemons(userInventory);
                 player.AnnounceIceMeltage(userInventory);
+                userInterface.Pause();
 
             }
         }

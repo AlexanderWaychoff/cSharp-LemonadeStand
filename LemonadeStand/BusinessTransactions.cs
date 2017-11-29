@@ -62,7 +62,7 @@ namespace LemonadeStand
                 {
                     customers[i - 1].percentChanceOfBuying += baseExtraCustomerChance * (customers[i - 1].friendlyness - 5);
                 }
-                if (customers[i - 1].friendlyness < 4)
+                if (customers[i - 1].friendlyness <= 4)
                 {
                     customers[i - 1].percentChanceOfBuying -= baseExtraCustomerChance * (4 - customers[i - 1].friendlyness);
                 }
@@ -75,7 +75,7 @@ namespace LemonadeStand
             if (dailyWeather.isRaining)
             {
                 storeRandomValue = randomRainValue.Next(20, 51);
-            }//minimum cost decreases chance when it should increase
+            }
             customerChance = 100 * ((Math.Floor(((baseCustomerPayment * ((dailyWeather.temperature * weatherPriceMultiplier) / (dailyWeather.temperature + weatherPriceAdditive)) - (storeRandomValue / 100))) * 100) / 100 - recipe.price) / weatherPriceDividedEffect);
             for (int i = customers.Count; i > 0; i--)
             {
@@ -85,7 +85,7 @@ namespace LemonadeStand
         }
         public List<Customer> RunCustomerPurchases(List<Customer> customers, Inventory userInventory, Conditions dailyWeather, Recipe recipe, Interface userInterface, Player player)
         {
-            Pitcher pitcher = new Pitcher(0, 0, 0, 0, true);//player.CreatePitcher(recipe, userInventory);
+            Pitcher pitcher = new Pitcher(0, 0, 0, 0, true);
             int totalCustomerPurchases = 0;
             customers = CalculateBaseCustomerChance(customers, dailyWeather);
             customers = CalculateExtraCustomerChance(customers, dailyWeather);
@@ -102,6 +102,7 @@ namespace LemonadeStand
                     {
                         totalCustomerPurchases += 1;
                         userInventory.moneyCount += recipe.price;
+                        userInventory.dailyProfit += recipe.price;
                         pitcher.cupsLeft -= 1;
                         player.RemoveUsedCup(recipe, userInventory);
                         customers[i - 1].hasPurchasedToday = true;
@@ -152,6 +153,10 @@ namespace LemonadeStand
                 }
             }
             if (recipe.lemonsUsed <= 3 && recipe.sugarUsed <= 3)
+            {
+                return -1;
+            }
+            if (recipe.lemonsUsed == 1 || recipe.sugarUsed == 1)
             {
                 return -1;
             }

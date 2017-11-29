@@ -55,9 +55,12 @@ namespace LemonadeStand
                 userInterface.ClearScreen();
                 gameLength.PassageOfDay();
                 customers = customerSales.RunCustomerPurchases(customers, userInventory, todaysForecast, recipe, userInterface, player);
+                CalculateAllProfit(userInventory, userInterface);
+                userInterface.DisplayProfit(userInventory, CalculateAllProfit(userInventory, userInterface));
                 customers = customerSales.CalculateAddedCustomers(customers, userInterface);
                 player.AgeLemons(userInventory);
                 player.AnnounceIceMeltage(userInventory);
+                userInventory.dailyProfit = 0;
                 userInterface.Pause();
 
             }
@@ -65,6 +68,12 @@ namespace LemonadeStand
         public Store ChangeStorePrices()
         {
             return store.UpdateStore();
+        }
+        public double CalculateAllProfit(Inventory userInventory, Interface userInterface)
+        {
+            //userInventory.CalculateDailyProfit(userInventory, userInterface);
+            userInventory.CalculateOverallProfit(userInventory);
+            return userInventory.overallProfit;
         }
     }
 }

@@ -99,6 +99,11 @@ namespace LemonadeStand
         {
             Console.WriteLine("\nYou have sold lemonade to " + amount + " customers today.\n");
         }
+        public void DisplayProfit(Inventory userInventory, double overallProfit)
+        {
+            Console.WriteLine("You started the day with " + (userInventory.moneyCount - userInventory.dailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.dailyProfit.ToString("0.00") + ".");
+            Console.WriteLine("You're total net worth so far: " + overallProfit.ToString("0.00"));
+        }
         public int GetPlayTime()
         {
             Func<string, bool> playTimeRange = VerifyTime;

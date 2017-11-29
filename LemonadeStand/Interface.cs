@@ -65,7 +65,7 @@ namespace LemonadeStand
 
         internal void Pause()
         {
-            Console.WriteLine("Press any key to continue to the next day.");
+            Console.WriteLine("\nPress any key to continue to the next day.");
             Console.ReadKey();
             Console.Clear();
         }

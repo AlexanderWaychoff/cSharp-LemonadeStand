@@ -213,15 +213,15 @@ namespace LemonadeStand
             {
                 userInventory.lemonCount -= 1;
                 removeLemon = true;
-                for (int j = totalLemons.Count - 1; j > 0; j--)
+                for (int j = totalLemons.Count - 1; j >= 0; j--)
                 {
                     if (removeLemon)
                     {
                         if (totalLemons[j].spoilTime == 1)
                         {
-                            j -= 1;
                             removeLemon = false;
                             totalLemons.RemoveAt(j);
+                            j -= 1;
                             break;
                         }
                     }
@@ -234,9 +234,9 @@ namespace LemonadeStand
                         {
                             if (totalLemons[k].spoilTime == 2)
                             {
-                                k -= 1;
                                 removeLemon = false;
                                 totalLemons.RemoveAt(k);
+                                k -= 1;
                                 break;
                             }
                         }

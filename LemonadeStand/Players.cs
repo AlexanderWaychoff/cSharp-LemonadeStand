@@ -275,11 +275,8 @@ namespace LemonadeStand
         }
         public void RemoveUsedCup(Recipe recipe, Inventory userInventory)
         {
-            if (userInventory.cupsCount > 0)
-            {
                 userInventory.cupsCount -= 1;
-                totalCups.RemoveAt(0);//error if 0 cups are bought and user tries to run stand
-            }
+                totalCups.RemoveAt(0);
         }
     }
 }

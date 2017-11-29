@@ -56,7 +56,7 @@ namespace LemonadeStand
                 gameLength.PassageOfDay();
                 customers = customerSales.RunCustomerPurchases(customers, userInventory, todaysForecast, recipe, userInterface, player);
                 CalculateAllProfit(userInventory, userInterface);
-                userInterface.DisplayProfit(userInventory, CalculateAllProfit(userInventory, userInterface));
+                userInterface.DisplayProfit(userInventory);
                 customers = customerSales.CalculateAddedCustomers(customers, userInterface);
                 player.AgeLemons(userInventory);
                 player.AnnounceIceMeltage(userInventory);

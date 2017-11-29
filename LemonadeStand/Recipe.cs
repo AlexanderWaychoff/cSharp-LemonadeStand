@@ -8,11 +8,11 @@ namespace LemonadeStand
 {
     public class Recipe
     {
-        public double lemonsUsed;
-        public double sugarUsed;
-        public double iceUsed;
+        public int lemonsUsed;
+        public int sugarUsed;
+        public int iceUsed;
         public double price;
-        public double cupUsed = 1;
+        public int cupUsed = 1;
         public Recipe(int lemonsUsed, int sugarUsed, int iceUsed, double price)
         {
             this.lemonsUsed = lemonsUsed;

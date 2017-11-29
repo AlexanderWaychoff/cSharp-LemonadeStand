@@ -190,19 +190,19 @@ namespace LemonadeStand
             if (userInput == lemonsOption)
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many lemons would you like the new recipe to have?  Enter a integer between 1 through 10 (1 being lowest quality, 10 being highest)\n", check1To10));
-                recipe.lemonsUsed = userNumber;
+                recipe.lemonsUsed = Convert.ToInt32(userNumber);
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == sugarOption)
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many cups of sugar would you like the new recipe to have.  Enter a integer between 1 through 10 (1 being lowest quality, 10 being highest)\n", check1To10));
-                recipe.sugarUsed = userNumber;
+                recipe.sugarUsed = Convert.ToInt32(userNumber);
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == iceOption)
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many ice cubes would you like the new recipe to have?  Enter a integer between 1 through 50 (quality depends on how high or low the temperature is; less ice if cold, or more ice if hot)\n", check1To50));
-                recipe.iceUsed = userNumber;
+                recipe.iceUsed = Convert.ToInt32(userNumber);
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == priceOption)

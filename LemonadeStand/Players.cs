@@ -194,13 +194,11 @@ namespace LemonadeStand
             totalIceCubes.Clear();
             userInventory.iceCount = totalIceCubes.Count;
         }
-        public Pitcher CreatePitcher (Recipe recipe, Inventory userInventory)
+        public Pitcher CreatePitcher (Recipe recipe, Inventory userInventory, Pitcher pitcher)
         {
-            Pitcher pitcher = new Pitcher(0, 0, 0, 0, true);
             if (userInventory.lemonCount >= recipe.lemonsUsed && userInventory.sugarCount >= recipe.sugarUsed && userInventory.iceCount >= recipe.iceUsed)
             {
-                pitcher = new Pitcher(RemoveUsedLemons(recipe, userInventory), RemoveUsedSugar(recipe, userInventory), RemoveUsedIce(recipe, userInventory), RemoveUsedCup(recipe, userInventory, pitcher), true);
-                RemoveUsedLemons(recipe, userInventory);
+                pitcher = new Pitcher(RemoveUsedLemons(recipe, userInventory), RemoveUsedSugar(recipe, userInventory), RemoveUsedIce(recipe, userInventory), pitcher.CupsPerPitcher, true);
             }
             else
             {
@@ -210,33 +208,35 @@ namespace LemonadeStand
         }
         public double RemoveUsedLemons(Recipe recipe, Inventory userInventory)
         {
-            bool removeLemon = true;
-            for (double i = recipe.lemonsUsed; i > 0; i--)
+            bool removeLemon;
+            for (int i = recipe.lemonsUsed; i > 0; i--)
             {
                 userInventory.lemonCount -= 1;
                 removeLemon = true;
-                foreach (Lemon lemon in totalLemons.ToList())
+                for (int j = totalLemons.Count - 1; j > 0; j--)
                 {
                     if (removeLemon)
                     {
-                        if (lemon.spoilTime == 1)
+                        if (totalLemons[j].spoilTime == 1)
                         {
+                            j -= 1;
                             removeLemon = false;
-                            totalLemons.Remove(lemon);
+                            totalLemons.RemoveAt(j);
                             break;
                         }
                     }
                 }
                 if (removeLemon)
                 {
-                    foreach (Lemon lemon in totalLemons.ToList())
+                    for (int k = totalLemons.Count - 1; k > 0; k--)
                     {
                         if (removeLemon)
                         {
-                            if (lemon.spoilTime == 2)
+                            if (totalLemons[k].spoilTime == 2)
                             {
+                                k -= 1;
                                 removeLemon = false;
-                                totalLemons.Remove(lemon);
+                                totalLemons.RemoveAt(k);
                                 break;
                             }
                         }
@@ -246,6 +246,7 @@ namespace LemonadeStand
                 if(removeLemon)
                 {
                     totalLemons.RemoveAt(0);
+                    removeLemon = false;
                 }
             }
             return recipe.lemonsUsed;
@@ -268,11 +269,10 @@ namespace LemonadeStand
             }
             return recipe.iceUsed;
         }
-        public double RemoveUsedCup(Recipe recipe, Inventory userInventory, Pitcher pitcher)
+        public void RemoveUsedCup(Recipe recipe, Inventory userInventory)
         {
             userInventory.cupsCount -= 1;
             totalCups.RemoveAt(0);
-            return pitcher.CupsPerPitcher;
         }
     }
 }

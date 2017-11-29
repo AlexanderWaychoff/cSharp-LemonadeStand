@@ -85,7 +85,7 @@ namespace LemonadeStand
         }
         public List<Customer> RunCustomerPurchases(List<Customer> customers, Inventory userInventory, Conditions dailyWeather, Recipe recipe, Interface userInterface, Player player)
         {
-            Pitcher pitcher = player.CreatePitcher(recipe, userInventory);
+            Pitcher pitcher = new Pitcher(0, 0, 0, 0, true);//player.CreatePitcher(recipe, userInventory);
             int totalCustomerPurchases = 0;
             customers = CalculateBaseCustomerChance(customers, dailyWeather);
             customers = CalculateExtraCustomerChance(customers, dailyWeather);
@@ -94,10 +94,16 @@ namespace LemonadeStand
             {
                 if(randomCustomerChance.Next(101) <= customer.percentChanceOfBuying)
                 {
+                    if (pitcher.hasEnoughStock && pitcher.cupsLeft == 0)
+                    {
+                        pitcher = player.CreatePitcher(recipe, userInventory, pitcher);
+                    }
                     if (pitcher.hasEnoughStock && pitcher.cupsLeft > 0)
                     {
                         totalCustomerPurchases += 1;
                         userInventory.moneyCount += recipe.price;
+                        pitcher.cupsLeft -= 1;
+                        player.RemoveUsedCup(recipe, userInventory);
                         customers[i - 1].hasPurchasedToday = true;
                         customers[i - 1] = testCustomerSatisfaction(customers[i - 1], dailyWeather, recipe);
                     }

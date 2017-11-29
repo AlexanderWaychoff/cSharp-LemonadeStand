@@ -16,7 +16,7 @@ namespace LemonadeStand
 
         private int cupsPerPitcher = 8;
 
-        public Pitcher(double lemons, double sugarCups, double iceCubes, double cupsPerPitcher, bool hasEnoughStock)
+        public Pitcher(double lemons, double sugarCups, double iceCubes, int cupsPerPitcher, bool hasEnoughStock)
         {
             this.lemonsUsed = lemons;
             this.sugarUsed = sugarCups;
@@ -24,7 +24,7 @@ namespace LemonadeStand
             this.cupsLeft = cupsPerPitcher;
             this.hasEnoughStock = hasEnoughStock;
         }
-        public double CupsPerPitcher
+        public int CupsPerPitcher
         {
             get
             {

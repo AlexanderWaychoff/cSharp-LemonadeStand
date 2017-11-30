@@ -16,10 +16,21 @@ namespace LemonadeStand
         public int cupsCount;
         public double moneyCount;
         public double dailyProfit;
-        public double overallProfit;
+        private double overallProfit;
 
         double startingFunds = 20.00;
 
+        public double OverallProfit
+        {
+            get
+            {
+                return overallProfit;
+            }
+            set
+            {
+                overallProfit = value;
+            }
+        }
         public Inventory(int startingLemons, int startingSugar, int startingIce, int startingCups)
         {
             money = new Money(startingFunds);
@@ -29,7 +40,7 @@ namespace LemonadeStand
             this.iceCount = startingIce;
             this.cupsCount = startingCups;
             this.dailyProfit = 0;
-            this.overallProfit = 0;
+            this.overallProfit = 9000.01;
         }
         public double CalculateDailyProfit(Inventory userInventory, Interface userInterface)
         {
@@ -38,8 +49,8 @@ namespace LemonadeStand
         }
         public double CalculateOverallProfit(Inventory userInventory)
         {
-            userInventory.overallProfit += userInventory.dailyProfit;
-            return userInventory.overallProfit;
+            userInventory.OverallProfit += userInventory.dailyProfit;
+            return userInventory.OverallProfit;
         }
         //public void ReduceOverallProfit(Inventory userInventory)
         //{

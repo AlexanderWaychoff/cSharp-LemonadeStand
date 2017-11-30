@@ -102,11 +102,11 @@ namespace LemonadeStand
         public void DisplayProfit(Inventory userInventory)
         {
             Console.WriteLine("You started the day with " + (userInventory.moneyCount - userInventory.dailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.dailyProfit.ToString("0.00") + ".");
-            Console.WriteLine("You're total net worth so far: " + userInventory.overallProfit.ToString("0.00"));
+            Console.WriteLine("You're total net worth so far: " + userInventory.OverallProfit.ToString("0.00"));
         }
         public void DisplayFinalTotal(Inventory userInventory)
         {
-            Console.WriteLine("You're total net after " + "enter days here" + "is: " + userInventory.overallProfit.ToString("0.00"));
+            Console.WriteLine("You're total net after " + "enter days here" + "is: " + userInventory.OverallProfit.ToString("0.00"));
         }
         public void DisplayForecast(List<Conditions>forecast)
         {

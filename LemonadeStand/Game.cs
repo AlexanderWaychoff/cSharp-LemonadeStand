@@ -27,9 +27,6 @@ namespace LemonadeStand
         }
         public void SetUpGame()
         {
-            highScore.ObtainHighScores();
-            highScore.CloseConnection();
-            Console.ReadKey();
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
             Console.Clear();
@@ -58,6 +55,13 @@ namespace LemonadeStand
                 userInterface.DisplayTotalCustomers(customers);
                 userInventory = player.ObtainInventoryStatus();
                 store = ChangeStorePrices();
+
+                highScore.ObtainHighScores();
+                userInventory.OverallProfit = 9000.01;
+                highScore.SubmitHighScore(player, userInventory);
+                highScore.ObtainHighScores();
+                Console.ReadKey();
+
                 userInput = userInterface.AskWhatToDo(userInventory, player, store, recipe);
                 //start of turn ^^\\end of turn vv
                 userInterface.ClearScreen();
@@ -81,7 +85,7 @@ namespace LemonadeStand
         {
             //userInventory.CalculateDailyProfit(userInventory, userInterface);
             userInventory.CalculateOverallProfit(userInventory);
-            return userInventory.overallProfit;
+            return userInventory.OverallProfit;
         }
         public void ShowFinalScore()
         {

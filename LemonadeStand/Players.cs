@@ -10,6 +10,7 @@ namespace LemonadeStand
     {
         int nearlyBadLemons;
         int spoiledLemons;
+        private string name = "Underpants";
 
 
         double priceMultiplier;
@@ -24,6 +25,18 @@ namespace LemonadeStand
         Ice iceCube;
         List<Cup> totalCups = new List<Cup>();
         Cup cup;
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
 
         public Players()
         {
@@ -81,7 +94,7 @@ namespace LemonadeStand
             else
             {
                 userInventory.moneyCount -= store.lemons10 * priceMultiplier;
-                userInventory.overallProfit -= store.lemons10 * priceMultiplier;
+                userInventory.OverallProfit -= store.lemons10 * priceMultiplier;
                 for (double i = boughtLemons; i > 0; i--)
                 {
                     lemon = new Lemon();
@@ -100,7 +113,7 @@ namespace LemonadeStand
             else
             {
                 userInventory.moneyCount -= store.sugar10 * priceMultiplier;
-                userInventory.overallProfit -= store.sugar10 * priceMultiplier;
+                userInventory.OverallProfit -= store.sugar10 * priceMultiplier;
                 for (double i = boughtSugar; i > 0; i--)
                 {
                     sugar = new Sugar();
@@ -119,7 +132,7 @@ namespace LemonadeStand
             else
             {
                 userInventory.moneyCount -= store.ice100 * priceMultiplier;
-                userInventory.overallProfit -= store.ice100 * priceMultiplier;
+                userInventory.OverallProfit -= store.ice100 * priceMultiplier;
                 for (double i = boughtIce; i > 0; i--)
                 {
                     iceCube = new Ice();
@@ -138,7 +151,7 @@ namespace LemonadeStand
             else
             {
                 userInventory.moneyCount -= store.cups100 * priceMultiplier;
-                userInventory.overallProfit -= store.cups100 * priceMultiplier;
+                userInventory.OverallProfit -= store.cups100 * priceMultiplier;
                 for (double i = boughtCups; i > 0; i--)
                 {
                     cup = new Cup();

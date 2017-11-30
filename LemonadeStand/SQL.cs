@@ -14,6 +14,7 @@ public class SQL
         public SqlTransaction transaction;
         public SqlDataAdapter sda;
         public SqlCommandBuilder scb;
+        public SqlCommand cmd;
         DataTable dt;
         public SQL()
         {
@@ -52,10 +53,29 @@ public class SQL
             Console.WriteLine("4. " + dt.Rows[3][1].ToString() + " with score: " + dt.Rows[3][2].ToString());
             Console.WriteLine("5. " + dt.Rows[4][1].ToString() + " with score: " + dt.Rows[4][2].ToString());
         }
-        public void SubmitHighScore()
+        public void SubmitHighScore(Player player, Inventory userInventory)
         {
-            scb = new SqlCommandBuilder(sda);
-            sda.Update(dt);
+            string highScore = "INSERT INTO dbo.HighScore VALUES(@Name, @Score);";
+            using (SqlConnection openCon = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Andross\\Desktop\\school_projects\\C#\\LemonadeStand\\LemonadeStand\\HighScores.mdf;Integrated Security=True"))
+            {
+                using (SqlCommand querySaveStaff = new SqlCommand(highScore))
+                {
+                    openCon.Open();
+                    querySaveStaff.Connection = openCon;
+                    querySaveStaff.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = player.Name;
+                    querySaveStaff.Parameters.Add("@Score", SqlDbType.Float).Value = userInventory.OverallProfit;
+
+                    querySaveStaff.ExecuteNonQuery();
+                    
+                }
+            }
+            //cmd = new SqlCommand(highScore, conn);
+            //cmd.Connection = conn;
+            //cmd.Parameters.AddWithValue("@Name", player.Name);
+            //cmd.Parameters.AddWithValue("@OverallProfit", userInventory.OverallProfit);
+            //scb = new SqlCommandBuilder(sda);
+            ////conn.commit
+            //sda.Update(dt);
         }
         public void CloseConnection()
         {

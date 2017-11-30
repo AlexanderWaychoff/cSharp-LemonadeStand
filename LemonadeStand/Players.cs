@@ -200,7 +200,7 @@ namespace LemonadeStand
         }
         public Pitcher CreatePitcher (Recipe recipe, Inventory userInventory, Pitcher pitcher)
         {
-            if (userInventory.lemonCount >= recipe.lemonsUsed && userInventory.sugarCount >= recipe.sugarUsed && userInventory.iceCount >= recipe.iceUsed)
+            if (userInventory.lemonCount >= recipe.lemonsUsed && userInventory.sugarCount >= recipe.sugarUsed && userInventory.iceCount >= recipe.iceUsed && userInventory.cupsCount>= pitcher.CupsPerPitcher)
             {
                 pitcher = new Pitcher(RemoveUsedLemons(recipe, userInventory), RemoveUsedSugar(recipe, userInventory), RemoveUsedIce(recipe, userInventory), pitcher.CupsPerPitcher, true);
             }

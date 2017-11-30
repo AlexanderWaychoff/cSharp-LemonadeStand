@@ -21,18 +21,20 @@ namespace LemonadeStand
         private double temperature;
         Random randomNumber = new Random();
         Conditions todaysWeather = new Conditions("slightly cloudy", false, 75);
+        List<Conditions> forecast = new List<Conditions>();
+        private int lengthOfForecast = 3;
         public Weather()
         {
 
         }
         public Conditions GetTheDaysWeather()
         {
-            List<string> allWeather = new List<string>();
+            //List<string> allWeather = new List<string>();
             cloudiness = DetermineCloudCover();
             isRaining = IsRaining(cloudiness);
             temperature = DetermineTemperature(isRaining);
             todaysWeather = new Conditions(cloudiness, isRaining, temperature);
-            Console.WriteLine("The sky is {0} and it {1}.  The temperature is {2}.\n", todaysWeather.cloudiness, isRaining ? "is raining" : "is not raining", temperature);
+            //Console.WriteLine("The sky is {0} and it {1}.  The temperature is {2}.\n", todaysWeather.cloudiness, isRaining ? "is raining" : "is not raining", temperature);
             return todaysWeather;//remove later
         }
         public string DetermineCloudCover()
@@ -83,15 +85,25 @@ namespace LemonadeStand
             double yesterdayTemperature = todaysWeather.temperature;
             double temperature = randomNumber.Next(minTemperature, maxTemperature);
 
-            //if (Math.Abs(yesterdayTemperature - temperature) >= 20)//20 is max temperature change in a single day
-            //{ add later if temperature fluctuates too much
-
-            //}
             if (isRaining)
             {
                 temperature -= randomNumber.Next(7, 20);
             }
             return temperature;
+        }
+        public List<Conditions> CreateForecast()
+        {
+            for (int i = 0; i < lengthOfForecast; i++)
+            {
+                forecast.Add(GetTheDaysWeather());
+            }
+            return forecast;
+        }
+        public List<Conditions> NextDaysForecast(List<Conditions> forecast)
+        {
+            forecast.RemoveAt(0);
+            forecast.Add(GetTheDaysWeather());
+            return forecast;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace LemonadeStand
     {
         Interface userInterface = new Interface();
         Player player = new Player();
-        Store store = new Store(); //0.75, 1.10, 0.25, 1.20
+        Store store = new Store();
         Weather dailyForecast = new Weather();
         Recipe recipe = new Recipe(4, 4, 20, 1.00);
         Conditions todaysForecast;
@@ -19,6 +19,7 @@ namespace LemonadeStand
 
         string userInput;
         List<Customer> customers = new List<Customer>();
+        List<Conditions> forecast = new List<Conditions>();
         public Game()
         {
 
@@ -28,7 +29,7 @@ namespace LemonadeStand
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
             Console.Clear();
-            todaysForecast = dailyForecast.GetTheDaysWeather();
+            forecast = dailyForecast.CreateForecast();
             PlayGame(gameLength);
         }
         public Time SetUpGameLength()
@@ -47,11 +48,13 @@ namespace LemonadeStand
             for (int i = 5; i > 0; i--)   //gameLength.gameDays
             {
                 userInterface.DisplayRemainingDays(i);
-                todaysForecast = dailyForecast.GetTheDaysWeather();
+                userInterface.DisplayForecast(forecast);
+                todaysForecast = forecast[0];
                 userInterface.DisplayTotalCustomers(customers);
                 userInventory = player.ObtainInventoryStatus();
                 store = ChangeStorePrices();
                 userInput = userInterface.AskWhatToDo(userInventory, player, store, recipe);
+                //start of turn ^^\\end of turn vv
                 userInterface.ClearScreen();
                 gameLength.PassageOfDay();
                 customers = customerSales.RunCustomerPurchases(customers, userInventory, todaysForecast, recipe, userInterface, player);

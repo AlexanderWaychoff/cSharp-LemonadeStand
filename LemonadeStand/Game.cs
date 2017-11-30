@@ -29,9 +29,9 @@ namespace LemonadeStand
         {
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
+            highScore.ObtainHighScores();
             userInterface.AskForName(player);
             Console.WriteLine(player.Name);
-            Console.ReadKey();
             Console.Clear();
             forecast = dailyForecast.CreateForecast();
             PlayGame(gameLength);
@@ -46,11 +46,11 @@ namespace LemonadeStand
             customers = customerSales.SetUpCustomerBase();
             TakeTurns(gameLength, todaysForecast, customers);
             userInterface.ClearScreen();
-            ShowFinalScore();
+            ShowFinalScore(gameLength);
         }
         public void TakeTurns(Time gameLength, Conditions todaysForecast, List<Customer> customers)
         {
-            for (int i = 1; i > 0; i--)//gameLength.gameDays
+            for (int i = gameLength.gameDays; i > 0; i--)
             {
                 userInterface.DisplayRemainingDays(i);
                 userInterface.DisplayForecast(forecast);
@@ -83,10 +83,11 @@ namespace LemonadeStand
             userInventory.CalculateOverallProfit(userInventory);
             return userInventory.OverallProfit;
         }
-        public void ShowFinalScore()
+        public void ShowFinalScore(Time gameLength)
         {
+            highScore.SubmitHighScore(player, userInventory, gameLength.gameDays);
             highScore.ObtainHighScores();
-            userInterface.DisplayFinalTotal(userInventory);
+            userInterface.DisplayFinalTotal(userInventory, gameLength.gameDays);
         }
     }
 }

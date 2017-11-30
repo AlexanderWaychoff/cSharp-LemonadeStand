@@ -104,9 +104,10 @@ namespace LemonadeStand
             Console.WriteLine("You started the day with " + (userInventory.moneyCount - userInventory.dailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.dailyProfit.ToString("0.00") + ".");
             Console.WriteLine("You're total net worth so far: " + userInventory.OverallProfit.ToString("0.00"));
         }
-        public void DisplayFinalTotal(Inventory userInventory)
+        public void DisplayFinalTotal(Inventory userInventory, int gameLength)
         {
-            Console.WriteLine("You're total net after " + "enter days here" + "is: " + userInventory.OverallProfit.ToString("0.00"));
+            Console.WriteLine("\nYou're total net after " + gameLength + " is: " + userInventory.OverallProfit.ToString("0.00"));
+            Console.WriteLine("Ask them to play again y/n, but probably let them restart the game to do so.");
         }
         public void DisplayForecast(List<Conditions>forecast)
         {
@@ -134,7 +135,7 @@ namespace LemonadeStand
         }
         public void AskForName(Player player)
         {
-            Console.WriteLine("Please enter your name.  At the end you will be able to submit this with your score.");
+            Console.WriteLine("\nPlease enter your name.  At the end you will be able to submit this with your score.\n");
             player.Name = Console.ReadLine();
             
         }

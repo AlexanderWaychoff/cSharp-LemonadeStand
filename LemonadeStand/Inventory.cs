@@ -40,7 +40,7 @@ namespace LemonadeStand
             this.iceCount = startingIce;
             this.cupsCount = startingCups;
             this.dailyProfit = 0;
-            this.overallProfit = 9000.01;
+            this.overallProfit = 0;
         }
         public double CalculateDailyProfit(Inventory userInventory, Interface userInterface)
         {

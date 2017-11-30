@@ -132,6 +132,12 @@ namespace LemonadeStand
             double characterNumber = double.Parse(character);
             return characterNumber;
         }
+        public void AskForName(Player player)
+        {
+            Console.WriteLine("Please enter your name.  At the end you will be able to submit this with your score.");
+            player.Name = Console.ReadLine();
+            
+        }
         public string AskWhatToDo(Inventory userInventory, Player player, Store store, Recipe recipe)
         {
             Func<string, bool> whatToDoOption = VerifyWhatToDo;
@@ -348,5 +354,13 @@ namespace LemonadeStand
             }
             return false;
         }
+        //public bool VerifyName (string userInput)
+        //{
+        //    if (userInput)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

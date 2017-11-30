@@ -16,6 +16,7 @@ namespace LemonadeStand
         Conditions todaysForecast;
         Inventory userInventory;
         BusinessTransactions customerSales = new BusinessTransactions();
+        SQL highScore = new SQL();
 
         string userInput;
         List<Customer> customers = new List<Customer>();
@@ -26,6 +27,9 @@ namespace LemonadeStand
         }
         public void SetUpGame()
         {
+            highScore.ObtainHighScores();
+            highScore.CloseConnection();
+            Console.ReadKey();
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
             Console.Clear();
@@ -46,7 +50,7 @@ namespace LemonadeStand
         }
         public void TakeTurns(Time gameLength, Conditions todaysForecast, List<Customer> customers)
         {
-            for (int i = gameLength.gameDays; i > 0; i--)
+            for (int i = 1; i > 0; i--)//gameLength.gameDays
             {
                 userInterface.DisplayRemainingDays(i);
                 userInterface.DisplayForecast(forecast);

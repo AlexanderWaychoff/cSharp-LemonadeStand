@@ -99,7 +99,7 @@ namespace LemonadeStand
             }
             return forecast;
         }
-        public List<Conditions> NextDaysForecast(List<Conditions> forecast)
+        public List<Conditions> GetNextDaysForecast(List<Conditions> forecast)
         {
             forecast.RemoveAt(0);
             forecast.Add(GetTheDaysWeather());

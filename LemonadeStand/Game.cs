@@ -40,12 +40,13 @@ namespace LemonadeStand
         public void PlayGame(Time gameLength)
         {
             customers = customerSales.SetUpCustomerBase();
-            TakeTurn(gameLength, todaysForecast, customers);
+            TakeTurns(gameLength, todaysForecast, customers);
             userInterface.ClearScreen();
+            ShowFinalScore();
         }
-        public void TakeTurn(Time gameLength, Conditions todaysForecast, List<Customer> customers)
+        public void TakeTurns(Time gameLength, Conditions todaysForecast, List<Customer> customers)
         {
-            for (int i = 5; i > 0; i--)   //gameLength.gameDays
+            for (int i = gameLength.gameDays; i > 0; i--)
             {
                 userInterface.DisplayRemainingDays(i);
                 userInterface.DisplayForecast(forecast);
@@ -59,13 +60,13 @@ namespace LemonadeStand
                 gameLength.PassageOfDay();
                 customers = customerSales.RunCustomerPurchases(customers, userInventory, todaysForecast, recipe, userInterface, player);
                 CalculateAllProfit(userInventory, userInterface);
+                dailyForecast.GetNextDaysForecast(forecast);
                 userInterface.DisplayProfit(userInventory);
                 customers = customerSales.CalculateAddedCustomers(customers, userInterface);
                 player.AgeLemons(userInventory);
                 player.AnnounceIceMeltage(userInventory);
                 userInventory.dailyProfit = 0;
                 userInterface.Pause();
-
             }
         }
         public Store ChangeStorePrices()
@@ -77,6 +78,10 @@ namespace LemonadeStand
             //userInventory.CalculateDailyProfit(userInventory, userInterface);
             userInventory.CalculateOverallProfit(userInventory);
             return userInventory.overallProfit;
+        }
+        public void ShowFinalScore()
+        {
+            userInterface.DisplayFinalTotal(userInventory);
         }
     }
 }

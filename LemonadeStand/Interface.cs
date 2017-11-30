@@ -104,11 +104,15 @@ namespace LemonadeStand
             Console.WriteLine("You started the day with " + (userInventory.moneyCount - userInventory.dailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.dailyProfit.ToString("0.00") + ".");
             Console.WriteLine("You're total net worth so far: " + userInventory.overallProfit.ToString("0.00"));
         }
+        public void DisplayFinalTotal(Inventory userInventory)
+        {
+            Console.WriteLine("You're total net after " + "enter days here" + "is: " + userInventory.overallProfit.ToString("0.00"));
+        }
         public void DisplayForecast(List<Conditions>forecast)
         {
             Console.WriteLine("Today's sky is {0} and it is {1}.  The temperature is {2}. \n", forecast[0].cloudiness, forecast[0].isRaining ? "raining" : "not raining", forecast[0].temperature);
             Console.WriteLine("Tomorrow's sky will be {0} and it will {1}.  The temperature will be {2}. \n", forecast[1].cloudiness, forecast[1].isRaining ? "rain" : "not rain", forecast[1].temperature);
-            Console.WriteLine("The day after tomorrow's sky will be {0} and it  will {1}.  The temperature will be {2}. \n", forecast[2].cloudiness, forecast[2].isRaining ? "rain" : "not rain", forecast[2].temperature);
+            Console.WriteLine("The day after tomorrow's sky will be {0} and it will {1}.  The temperature will be {2}. \n", forecast[2].cloudiness, forecast[2].isRaining ? "rain" : "not rain", forecast[2].temperature);
 
         }
         public int GetPlayTime()

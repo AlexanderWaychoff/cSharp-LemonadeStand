@@ -182,11 +182,11 @@ namespace LemonadeStand
         {
             if (!(spoiledLemons == 0))
             {
-                Console.Write("\n**" + spoiledLemons + " were thrown out due to spoilage.**\n");
+                Console.Write("\n**" + spoiledLemons + " lemon(s) were thrown out due to spoilage.**\n");
             }
             if(!(nearlyBadLemons == 0))
             {
-                Console.Write("\n**" + nearlyBadLemons + " are currently " + lemon.lemonStatus + " and will spoil if not used by tomorrow.**\n");
+                Console.Write("\n**" + nearlyBadLemons + " lemon(s) are currently " + lemon.lemonStatus + " and will spoil if not used by tomorrow.**\n");
             }
         }
         public void AnnounceIceMeltage(Inventory userInventory)

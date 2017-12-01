@@ -107,7 +107,7 @@ namespace LemonadeStand
         public void DisplayFinalTotal(Inventory userInventory, int gameLength)
         {
             Console.WriteLine("\nYou're total net after " + gameLength + " is: " + userInventory.OverallProfit.ToString("0.00"));
-            Console.WriteLine("Ask them to play again y/n, but probably let them restart the game to do so.");
+            Console.WriteLine("Thanks for playing!  If you'd like to see if you're score made it in the top 5, start the game again once this closes.  You can press enter at any time to close this game.");
         }
         public void DisplayForecast(List<Conditions>forecast)
         {

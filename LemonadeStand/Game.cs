@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+
+//lines 22, 35, 91, 92
 
 namespace LemonadeStand
 {
@@ -16,7 +19,7 @@ namespace LemonadeStand
         Conditions todaysForecast;
         Inventory userInventory;
         BusinessTransactions customerSales = new BusinessTransactions();
-        SQL highScore = new SQL();
+        //SQL highScore = new SQL();
 
         string userInput;
         List<Customer> customers = new List<Customer>();
@@ -29,7 +32,7 @@ namespace LemonadeStand
         {
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
-            highScore.ObtainHighScores();
+            //highScore.ObtainHighScores();
             userInterface.AskForName(player);
             Console.WriteLine(player.Name);
             Console.Clear();
@@ -85,8 +88,8 @@ namespace LemonadeStand
         }
         public void ShowFinalScore(Time gameLength)
         {
-            highScore.SubmitHighScore(player, userInventory, gameLength.gameDays);
-            highScore.ObtainHighScores();
+            //highScore.SubmitHighScore(player, userInventory, gameLength.gameDays);
+            //highScore.ObtainHighScores();
             userInterface.DisplayFinalTotal(userInventory, gameLength.gameDays);
         }
     }

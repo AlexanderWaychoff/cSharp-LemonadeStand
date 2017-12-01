@@ -58,13 +58,6 @@ public class SQL
                     
                 }
             }
-            //cmd = new SqlCommand(highScore, conn);
-            //cmd.Connection = conn;
-            //cmd.Parameters.AddWithValue("@Name", player.Name);
-            //cmd.Parameters.AddWithValue("@OverallProfit", userInventory.OverallProfit);
-            //scb = new SqlCommandBuilder(sda);
-            ////conn.commit
-            //sda.Update(dt);
         }
         public void CloseConnection()
         {

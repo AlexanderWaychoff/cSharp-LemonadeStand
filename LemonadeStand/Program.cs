@@ -12,7 +12,7 @@ namespace LemonadeStand
         {
             Game playGame = new Game();
             playGame.SetUpGame();
-            Console.ReadKey();
+            Console.ReadLine();
         }
     }
 }

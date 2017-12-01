@@ -72,7 +72,7 @@ namespace LemonadeStand
                 customers = customerSales.CalculateAddedCustomers(customers, userInterface);
                 player.AgeLemons(userInventory);
                 player.AnnounceIceMeltage(userInventory);
-                userInventory.dailyProfit = 0;
+                userInventory.DailyProfit = 0;
                 userInterface.Pause();
             }
         }

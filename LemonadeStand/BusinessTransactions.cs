@@ -39,8 +39,8 @@ namespace LemonadeStand
         }
         public List<Customer> CalculateBaseCustomerChance(List<Customer> customers, Conditions dailyWeather)
         {
-            customerChance = (dailyWeather.temperature/2);   //divide by 100 to make percentage
-            if (dailyWeather.isRaining)
+            customerChance = (dailyWeather.Temperature/2);   //divide by 100 to make percentage
+            if (dailyWeather.IsRaining)
             {
                 customerChance -= randomRainValue.Next(15, 35);
             }
@@ -50,7 +50,7 @@ namespace LemonadeStand
             }
             for (int i = customers.Count; i > 0; i--)
             {
-                customers[i - 1].percentChanceOfBuying = customerChance;
+                customers[i - 1].PercentChanceOfBuying = customerChance;
             }
             return customers;
         }
@@ -58,13 +58,13 @@ namespace LemonadeStand
         {
             for (int i = customers.Count; i > 0; i--)
             {
-                if (customers[i - 1].friendlyness > 5)
+                if (customers[i - 1].Friendlyness > 5)
                 {
-                    customers[i - 1].percentChanceOfBuying += baseExtraCustomerChance * (customers[i - 1].friendlyness - 5);
+                    customers[i - 1].PercentChanceOfBuying += baseExtraCustomerChance * (customers[i - 1].Friendlyness - 5);
                 }
-                if (customers[i - 1].friendlyness <= 4)
+                if (customers[i - 1].Friendlyness <= 4)
                 {
-                    customers[i - 1].percentChanceOfBuying -= baseExtraCustomerChance * (4 - customers[i - 1].friendlyness);
+                    customers[i - 1].PercentChanceOfBuying -= baseExtraCustomerChance * (4 - customers[i - 1].Friendlyness);
                 }
             }
             return customers;
@@ -72,14 +72,14 @@ namespace LemonadeStand
         public List<Customer> CalculateCostChance(List<Customer> customers, Conditions dailyWeather, Recipe recipe)
         {
             storeRandomValue = 0;
-            if (dailyWeather.isRaining)
+            if (dailyWeather.IsRaining)
             {
                 storeRandomValue = randomRainValue.Next(20, 51);
             }
-            customerChance = 100 * ((Math.Floor(((baseCustomerPayment * ((dailyWeather.temperature * weatherPriceMultiplier) / (dailyWeather.temperature + weatherPriceAdditive)) - (storeRandomValue / 100))) * 100) / 100 - recipe.price) / weatherPriceDividedEffect);
+            customerChance = 100 * ((Math.Floor(((baseCustomerPayment * ((dailyWeather.Temperature * weatherPriceMultiplier) / (dailyWeather.Temperature + weatherPriceAdditive)) - (storeRandomValue / 100))) * 100) / 100 - recipe.Price) / weatherPriceDividedEffect);
             for (int i = customers.Count; i > 0; i--)
             {
-                customers[i - 1].percentChanceOfBuying += customerChance;
+                customers[i - 1].PercentChanceOfBuying += customerChance;
             }
             return customers;
         }
@@ -92,7 +92,7 @@ namespace LemonadeStand
             customers = CalculateCostChance(customers, dailyWeather, recipe);
             for (int i = customers.Count; i > 0; i--)
             {
-                if(randomCustomerChance.Next(101) <= customer.percentChanceOfBuying)
+                if(randomCustomerChance.Next(101) <= customer.PercentChanceOfBuying)
                 {
                     if (pitcher.HasEnoughStock && pitcher.CupsLeft == 0)
                     {
@@ -101,11 +101,11 @@ namespace LemonadeStand
                     if (pitcher.HasEnoughStock && pitcher.CupsLeft > 0)
                     {
                         totalCustomerPurchases += 1;
-                        userInventory.MoneyCount += recipe.price;
-                        userInventory.dailyProfit += recipe.price;
+                        userInventory.MoneyCount += recipe.Price;
+                        userInventory.DailyProfit += recipe.Price;
                         pitcher.CupsLeft -= 1;
                         player.RemoveUsedCup(recipe, userInventory);
-                        customers[i - 1].hasPurchasedToday = true;
+                        customers[i - 1].HasPurchasedToday = true;
                         customers[i - 1] = testCustomerSatisfaction(customers[i - 1], dailyWeather, recipe);
                     }
                 }
@@ -121,42 +121,42 @@ namespace LemonadeStand
             customerSatisfaction += testCustomerBeverageTemperature(customer, dailyWeather, recipe);
             if (customerSatisfaction >= 2)
             {
-                customer.isPleased = true;
+                customer.IsPleased = true;
             }
             if (customerSatisfaction < 0)
             {
-                customer.isDispleased = true;
+                customer.IsDispleased = true;
             }
             return customer;
         }
         public int testCustomerFlavor(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
-            if (customer.flavorPreference < 5)
+            if (customer.FlavorPreference < 5)
             {
-                if (recipe.lemonsUsed > 10 - customer.flavorPreference && recipe.sugarUsed <= 1 + customer.flavorPreference)
+                if (recipe.LemonsUsed > 10 - customer.FlavorPreference && recipe.SugarUsed <= 1 + customer.FlavorPreference)
                 {
                     return 1;
                 }
             }
-            else if (customer.flavorPreference > 5)
+            else if (customer.FlavorPreference > 5)
             {
-                if (recipe.sugarUsed > 1 + customer.flavorPreference && recipe.lemonsUsed <= 10 - customer.flavorPreference)
+                if (recipe.SugarUsed > 1 + customer.FlavorPreference && recipe.LemonsUsed <= 10 - customer.FlavorPreference)
                 {
                     return 1;
                 }
             }
             else
             {
-                if (recipe.lemonsUsed == customer.flavorPreference && recipe.sugarUsed == customer.flavorPreference)
+                if (recipe.LemonsUsed == customer.FlavorPreference && recipe.SugarUsed == customer.FlavorPreference)
                 {
                     return 1;
                 }
             }
-            if (recipe.lemonsUsed <= 3 && recipe.sugarUsed <= 3)
+            if (recipe.LemonsUsed <= 3 && recipe.SugarUsed <= 3)
             {
                 return -1;
             }
-            if (recipe.lemonsUsed == 1 || recipe.sugarUsed == 1)
+            if (recipe.LemonsUsed == 1 || recipe.SugarUsed == 1)
             {
                 return -1;
             }
@@ -164,11 +164,11 @@ namespace LemonadeStand
         }
         public int testCustomerPricing(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
-            if ((Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 - recipe.price > customerCentQuality)
+            if ((Math.Floor((baseCustomerPayment * ((dailyWeather.Temperature * 3) / (dailyWeather.Temperature + 50)) - storeRandomValue) * 100) / 100) / 10 - recipe.Price > customerCentQuality)
             {
                 return -1;  //customer paid more than 50 cents difference for the lemonade, reduce satisfaction
             }
-            else if ((Math.Floor((baseCustomerPayment * ((dailyWeather.temperature * 3) / (dailyWeather.temperature + 50)) - storeRandomValue) * 100) / 100) / 10 - recipe.price < customerCentQuality)
+            else if ((Math.Floor((baseCustomerPayment * ((dailyWeather.Temperature * 3) / (dailyWeather.Temperature + 50)) - storeRandomValue) * 100) / 100) / 10 - recipe.Price < customerCentQuality)
             {
                 return 1;   //customer paid less than 50 cents difference, increase satisfaction
             }
@@ -176,11 +176,11 @@ namespace LemonadeStand
         }
         public int testCustomerBeverageTemperature(Customer customer, Conditions dailyWeather, Recipe recipe)
         {
-            if (baseIceCubePreference * (dailyWeather.temperature / 75) <= recipe.iceUsed + 3 && baseIceCubePreference * (dailyWeather.temperature / 75) >= recipe.iceUsed - 3)
+            if (baseIceCubePreference * (dailyWeather.Temperature / 75) <= recipe.IceUsed + 3 && baseIceCubePreference * (dailyWeather.Temperature / 75) >= recipe.IceUsed - 3)
             {
                 return 1;
             }
-            else if (baseIceCubePreference * (dailyWeather.temperature / 75) >= recipe.iceUsed + customerIceQuality || baseIceCubePreference * (dailyWeather.temperature / 75) <= recipe.iceUsed - customerIceQuality)
+            else if (baseIceCubePreference * (dailyWeather.Temperature / 75) >= recipe.IceUsed + customerIceQuality || baseIceCubePreference * (dailyWeather.Temperature / 75) <= recipe.IceUsed - customerIceQuality)
             {
                 return -1;
             }
@@ -202,35 +202,35 @@ namespace LemonadeStand
             double dissatisfiedCustomerCount = 0;
             for (int i = customers.Count; i > 0; i--)
             {
-                if (customers[i - 1].hasPurchasedToday && customers[i - 1].isPleased)
+                if (customers[i - 1].HasPurchasedToday && customers[i - 1].IsPleased)
                 {
                     satisfiedCustomerCount += 1;
-                    customers[i - 1].friendlyness += 3;
-                    customers[i - 1].awareOfLemonadeStand += 1;
-                    if (customers[i - 1].friendlyness > 10)
+                    customers[i - 1].Friendlyness += 3;
+                    customers[i - 1].AwareOfLemonadeStand += 1;
+                    if (customers[i - 1].Friendlyness > 10)
                     {
-                        customers[i - 1].awareOfLemonadeStand += 1;
-                        customers[i - 1].friendlyness = 10;
+                        customers[i - 1].AwareOfLemonadeStand += 1;
+                        customers[i - 1].Friendlyness = 10;
                     }
                 }
-                if (customers[i - 1].hasPurchasedToday && customers[i - 1].isDispleased)
+                if (customers[i - 1].HasPurchasedToday && customers[i - 1].IsDispleased)
                 {
                     dissatisfiedCustomerCount += 1;
-                    customers[i - 1].friendlyness -= 5;
-                    if (customers[i - 1].friendlyness < 1)
+                    customers[i - 1].Friendlyness -= 5;
+                    if (customers[i - 1].Friendlyness < 1)
                     {
-                        customers[i - 1].friendlyness = 1;
+                        customers[i - 1].Friendlyness = 1;
                     }
-                    customers[i - 1].awareOfLemonadeStand -= 5;
-                    if (customers[i - 1].awareOfLemonadeStand < 1)
+                    customers[i - 1].AwareOfLemonadeStand -= 5;
+                    if (customers[i - 1].AwareOfLemonadeStand < 1)
                     {
-                        customers[i - 1].awareOfLemonadeStand = 1;
+                        customers[i - 1].AwareOfLemonadeStand = 1;
                     }
                 }
-                customers[i - 1].hasPurchasedToday = false;
-                customers[i - 1].isPleased = false;
-                customers[i - 1].isDispleased = false;
-                if (randomAttitude.Next(4, 11) <= minimumForCustomerRemoval && customers[i - 1].friendlyness == 1)
+                customers[i - 1].HasPurchasedToday = false;
+                customers[i - 1].IsPleased = false;
+                customers[i - 1].IsDispleased = false;
+                if (randomAttitude.Next(4, 11) <= minimumForCustomerRemoval && customers[i - 1].Friendlyness == 1)
                 {
                     customers.Remove(customers[i - 1]);
                     i -= 1;
@@ -256,9 +256,9 @@ namespace LemonadeStand
             popularCustomerCount = 0;
             for (int i = 0; i < customers.Count; i++)
             {
-                if (customers[i].awareOfLemonadeStand > 5)
+                if (customers[i].AwareOfLemonadeStand > 5)
                 {
-                    for (int j = 5; j < customers[i].awareOfLemonadeStand; j++)
+                    for (int j = 5; j < customers[i].AwareOfLemonadeStand; j++)
                     {
                         popularCustomerCount += 1;
                         customer = new Customer(randomThirstiness.Next(1, 11), randomFlavor.Next(1, 11), randomAttitude.Next(6, 11), startingPopularity - randomPopularity.Next(0, 3), false);

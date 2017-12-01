@@ -82,7 +82,7 @@ namespace LemonadeStand
         }
         public double DetermineTemperature(bool isRaining)
         {
-            double yesterdayTemperature = todaysWeather.temperature;
+            double yesterdayTemperature = todaysWeather.Temperature;
             double temperature = randomNumber.Next(minTemperature, maxTemperature);
 
             if (isRaining)

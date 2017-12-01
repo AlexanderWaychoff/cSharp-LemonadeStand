@@ -9,21 +9,21 @@ namespace LemonadeStand
 {
     public class Interface
     {
-        int characterNumber;
-        string userInput;
-        double userNumber;
+        private int characterNumber;
+        private string userInput;
+        private double userNumber;
 
-        public string cancelOption = "cancel";
+        private string cancelOption = "cancel";
 
-        public string stockOption = "stock";
-        public string recipeOption = "recipe";
-        public string startOption = "start";
+        private string stockOption = "stock";
+        private string recipeOption = "recipe";
+        private string startOption = "start";
 
-        public string lemonsOption = "lemons";
-        public string sugarOption = "sugar";
-        public string iceOption = "ice";
-        public string cupsOption = "cups";
-        public string priceOption = "price";
+        private string lemonsOption = "lemons";
+        private string sugarOption = "sugar";
+        private string iceOption = "ice";
+        private string cupsOption = "cups";
+        private string priceOption = "price";
 
         public Interface()
         {
@@ -42,7 +42,7 @@ namespace LemonadeStand
         }
         public void DisplayRecipe(Recipe recipe)
         {
-            Console.WriteLine("\nFor each pitcher of lemonade you are using: " + recipe.lemonsUsed + " lemon(s), " + recipe.sugarUsed + " cup(s) of sugar, and " + recipe.iceUsed + " ice cube(s).  You are currently charging $" + recipe.price.ToString("0.00") + " per cup.\n");
+            Console.WriteLine("\nFor each pitcher of lemonade you are using: " + recipe.LemonsUsed + " lemon(s), " + recipe.SugarUsed + " cup(s) of sugar, and " + recipe.IceUsed + " ice cube(s).  You are currently charging $" + recipe.Price.ToString("0.00") + " per cup.\n");
         }
         public void DisplayRemainingDays(int days)
         {
@@ -101,7 +101,7 @@ namespace LemonadeStand
         }
         public void DisplayProfit(Inventory userInventory)
         {
-            Console.WriteLine("You started the day with " + (userInventory.MoneyCount - userInventory.dailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.dailyProfit.ToString("0.00") + ".");
+            Console.WriteLine("You started the day with " + (userInventory.MoneyCount - userInventory.DailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.DailyProfit.ToString("0.00") + ".");
             Console.WriteLine("You're total net worth so far: " + userInventory.OverallProfit.ToString("0.00"));
         }
         public void DisplayFinalTotal(Inventory userInventory, int gameLength)
@@ -111,9 +111,9 @@ namespace LemonadeStand
         }
         public void DisplayForecast(List<Conditions>forecast)
         {
-            Console.WriteLine("Today's sky is {0} and it is {1}.  The temperature is {2}. \n", forecast[0].cloudiness, forecast[0].isRaining ? "raining" : "not raining", forecast[0].temperature);
-            Console.WriteLine("Tomorrow's sky will be {0} and it will {1}.  The temperature will be {2}. \n", forecast[1].cloudiness, forecast[1].isRaining ? "rain" : "not rain", forecast[1].temperature);
-            Console.WriteLine("The day after tomorrow's sky will be {0} and it will {1}.  The temperature will be {2}. \n", forecast[2].cloudiness, forecast[2].isRaining ? "rain" : "not rain", forecast[2].temperature);
+            Console.WriteLine("Today's sky is {0} and it is {1}.  The temperature is {2}. \n", forecast[0].Cloudiness, forecast[0].IsRaining ? "raining" : "not raining", forecast[0].Temperature);
+            Console.WriteLine("Tomorrow's sky will be {0} and it will {1}.  The temperature will be {2}. \n", forecast[1].Cloudiness, forecast[1].IsRaining ? "rain" : "not rain", forecast[1].Temperature);
+            Console.WriteLine("The day after tomorrow's sky will be {0} and it will {1}.  The temperature will be {2}. \n", forecast[2].Cloudiness, forecast[2].IsRaining ? "rain" : "not rain", forecast[2].Temperature);
 
         }
         public int GetPlayTime()
@@ -123,7 +123,7 @@ namespace LemonadeStand
             return ConvertToInt(userInput);
         }
 
-        public int ConvertToInt(string character)
+        private int ConvertToInt(string character)
         {
             characterNumber = Convert.ToInt32(character);
             return characterNumber;
@@ -201,7 +201,7 @@ namespace LemonadeStand
         }
         public void CheckIfEnoughStock(Inventory userInventory, Player player, Store store, Recipe recipe)
         {
-            if (userInventory.LemonCount < recipe.lemonsUsed || userInventory.SugarCount < recipe.sugarUsed || userInventory.IceCount < recipe.iceUsed || userInventory.CupsCount == 0)
+            if (userInventory.LemonCount < recipe.LemonsUsed || userInventory.SugarCount < recipe.SugarUsed || userInventory.IceCount < recipe.IceUsed || userInventory.CupsCount == 0)
             {
                 Console.WriteLine("\n**You don't have enough supplies to make any pitchers of lemonade!**\n\nPress any key to continue.\n");
                 Console.ReadKey();
@@ -223,25 +223,25 @@ namespace LemonadeStand
             if (userInput == lemonsOption)
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many lemons would you like the new recipe to have?  Enter a integer between 1 through 10 (1 being lowest quality, 10 being highest)\n", check1To10));
-                recipe.lemonsUsed = Convert.ToInt32(userNumber);
+                recipe.LemonsUsed = Convert.ToInt32(userNumber);
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == sugarOption)
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many cups of sugar would you like the new recipe to have.  Enter a integer between 1 through 10 (1 being lowest quality, 10 being highest)\n", check1To10));
-                recipe.sugarUsed = Convert.ToInt32(userNumber);
+                recipe.SugarUsed = Convert.ToInt32(userNumber);
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == iceOption)
             {
                 userNumber = ConvertToInt(VerifyInput("\nHow many ice cubes would you like the new recipe to have?  Enter a integer between 1 through 50 (quality depends on how high or low the temperature is; less ice if cold, or more ice if hot)\n", check1To50));
-                recipe.iceUsed = Convert.ToInt32(userNumber);
+                recipe.IceUsed = Convert.ToInt32(userNumber);
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == priceOption)
             {
                 userNumber = ConvertToDecimal(VerifyInput("\nHow much would you like to charge per cup?  Enter a number between 0.01 and 5.00 (price will affect demand and a customer's willingness to purchase your lemonade based on weather conditions)\n", check5Dollars));
-                recipe.price = userNumber;
+                recipe.Price = userNumber;
                 CheckRecipe(userInventory, player, store, recipe);
             }
             if (userInput == cancelOption)
@@ -249,7 +249,7 @@ namespace LemonadeStand
                 AskWhatToDo(userInventory, player, store, recipe);
             }
         }
-        public string VerifyInput(string question, Func<string, bool> validation)
+        private string VerifyInput(string question, Func<string, bool> validation)
         {
             string userInput;
             bool isThereBadInput = false;
@@ -266,7 +266,7 @@ namespace LemonadeStand
             while (!validation(userInput));
             return userInput;
         }
-        public bool VerifyHowMany10to100(string userInput)
+        private bool VerifyHowMany10to100(string userInput)
         {
             if (userInput == "10" || userInput == "50" || userInput == "100" || userInput == "0")
             {
@@ -274,7 +274,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool VerifyHowMany100to1000(string userInput)
+        private bool VerifyHowMany100to1000(string userInput)
         {
             if (userInput == "100" || userInput == "500" || userInput == "1000" || userInput == "0")
             {
@@ -282,7 +282,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool VerifyWhichStock(string userInput)
+        private bool VerifyWhichStock(string userInput)
         {
             if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == cupsOption || userInput == cancelOption)
             {
@@ -290,7 +290,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool VerifyWhichToChange(string userInput)
+        private bool VerifyWhichToChange(string userInput)
         {
             if (userInput == lemonsOption || userInput == sugarOption || userInput == iceOption || userInput == priceOption ||userInput == cancelOption)
             {
@@ -298,7 +298,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool VerifyTime(string userInput)
+        private bool VerifyTime(string userInput)
         {
             if (userInput.All(char.IsDigit))
             {
@@ -310,7 +310,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool Verify1To10(string userInput)   //min\max for lemon\sugar per pitcher
+        private bool Verify1To10(string userInput)   //min\max for lemon\sugar per pitcher
         {
             if (userInput.All(char.IsDigit))
             {
@@ -322,7 +322,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool Verify1To50(string userInput)   //min\max for ice per pitcher
+        private bool Verify1To50(string userInput)   //min\max for ice per pitcher
         {
             if (userInput.All(char.IsDigit))
             {
@@ -334,7 +334,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool VerifyUpTo5(string userInput)   //min\max price per cup
+        private bool VerifyUpTo5(string userInput)   //min\max price per cup
         {
             double inputToDouble;
             if (double.TryParse(userInput, out inputToDouble))
@@ -347,7 +347,7 @@ namespace LemonadeStand
             }
             return false;
         }
-        public bool VerifyWhatToDo (string userInput)
+        private bool VerifyWhatToDo (string userInput)
         {
             if (userInput == stockOption || userInput == recipeOption || userInput == startOption)
             {
@@ -355,13 +355,5 @@ namespace LemonadeStand
             }
             return false;
         }
-        //public bool VerifyName (string userInput)
-        //{
-        //    if (userInput)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
     }
 }

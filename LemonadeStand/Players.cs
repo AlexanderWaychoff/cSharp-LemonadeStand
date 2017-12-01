@@ -8,12 +8,12 @@ namespace LemonadeStand
 {
     public class Players
     {
-        int nearlyBadLemons;
-        int spoiledLemons;
-        private string name = "Underpants";
+        private int nearlyBadLemons;
+        private int spoiledLemons;
+        private string name;
 
 
-        double priceMultiplier;
+        private double priceMultiplier;
 
         Inventory userInventory = new Inventory(0, 0, 0, 0); //starting items count
 
@@ -213,7 +213,7 @@ namespace LemonadeStand
         }
         public Pitcher CreatePitcher (Recipe recipe, Inventory userInventory, Pitcher pitcher)
         {
-            if (userInventory.LemonCount >= recipe.lemonsUsed && userInventory.SugarCount >= recipe.sugarUsed && userInventory.IceCount >= recipe.iceUsed && userInventory.CupsCount>= pitcher.CupsPerPitcher)
+            if (userInventory.LemonCount >= recipe.LemonsUsed && userInventory.SugarCount >= recipe.SugarUsed && userInventory.IceCount >= recipe.IceUsed && userInventory.CupsCount>= pitcher.CupsPerPitcher)
             {
                 pitcher = new Pitcher(RemoveUsedLemons(recipe, userInventory), RemoveUsedSugar(recipe, userInventory), RemoveUsedIce(recipe, userInventory), pitcher.CupsPerPitcher, true);
             }
@@ -226,7 +226,7 @@ namespace LemonadeStand
         public double RemoveUsedLemons(Recipe recipe, Inventory userInventory)
         {
             bool removeLemon;
-            for (int i = recipe.lemonsUsed; i > 0; i--)
+            for (int i = recipe.LemonsUsed; i > 0; i--)
             {
                 userInventory.LemonCount -= 1;
                 removeLemon = true;
@@ -266,25 +266,25 @@ namespace LemonadeStand
                     removeLemon = false;
                 }
             }
-            return recipe.lemonsUsed;
+            return recipe.LemonsUsed;
         }
         public double RemoveUsedSugar(Recipe recipe, Inventory userInventory)
         {
-            for (double i = recipe.sugarUsed; i > 0; i--)
+            for (double i = recipe.SugarUsed; i > 0; i--)
             {
                 userInventory.SugarCount -= 1;
                 totalSugar.RemoveAt(0);
             }
-            return recipe.sugarUsed;
+            return recipe.SugarUsed;
         }
         public double RemoveUsedIce(Recipe recipe, Inventory userInventory)
         {
-            for (double i = recipe.iceUsed; i > 0; i--)
+            for (double i = recipe.IceUsed; i > 0; i--)
             {
                 userInventory.IceCount -= 1;
                 totalIceCubes.RemoveAt(0);
             }
-            return recipe.iceUsed;
+            return recipe.IceUsed;
         }
         public void RemoveUsedCup(Recipe recipe, Inventory userInventory)
         {

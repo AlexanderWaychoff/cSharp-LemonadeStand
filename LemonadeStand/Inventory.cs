@@ -10,15 +10,71 @@ namespace LemonadeStand
     {
         Money money;
 
-        public int lemonCount;
-        public int sugarCount;
-        public int iceCount;
-        public int cupsCount;
-        public double moneyCount;
+        private int lemonCount;
+        private int sugarCount;
+        private int iceCount;
+        private int cupsCount;
+        private double moneyCount;
         public double dailyProfit;
         private double overallProfit;
 
         double startingFunds = 20.00;
+
+        public int LemonCount
+        {
+            get
+            {
+                return lemonCount;
+            }
+            set
+            {
+                lemonCount = value;
+            }
+        }
+        public int SugarCount
+        {
+            get
+            {
+                return sugarCount;
+            }
+            set
+            {
+                sugarCount = value;
+            }
+        }
+        public int IceCount
+        {
+            get
+            {
+                return iceCount;
+            }
+            set
+            {
+                iceCount = value;
+            }
+        }
+        public int CupsCount
+        {
+            get
+            {
+                return cupsCount;
+            }
+            set
+            {
+                cupsCount = value;
+            }
+        }
+        public double MoneyCount
+        {
+            get
+            {
+                return moneyCount;
+            }
+            set
+            {
+                moneyCount = value;
+            }
+        }
 
         public double OverallProfit
         {
@@ -34,17 +90,17 @@ namespace LemonadeStand
         public Inventory(int startingLemons, int startingSugar, int startingIce, int startingCups)
         {
             money = new Money(startingFunds);
-            this.moneyCount = startingFunds;
-            this.lemonCount = startingLemons;
-            this.sugarCount = startingSugar;
-            this.iceCount = startingIce;
-            this.cupsCount = startingCups;
+            this.MoneyCount = startingFunds;
+            this.LemonCount = startingLemons;
+            this.SugarCount = startingSugar;
+            this.IceCount = startingIce;
+            this.CupsCount = startingCups;
             this.dailyProfit = 0;
             this.overallProfit = 0;
         }
         public double CalculateDailyProfit(Inventory userInventory, Interface userInterface)
         {
-            userInventory.dailyProfit = userInventory.dailyProfit - userInterface.ConvertToDecimal(userInventory.moneyCount.ToString("0.00"));
+            userInventory.dailyProfit = userInventory.dailyProfit - userInterface.ConvertToDecimal(userInventory.MoneyCount.ToString("0.00"));
             return userInventory.dailyProfit;
         }
         public double CalculateOverallProfit(Inventory userInventory)

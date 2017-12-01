@@ -101,7 +101,7 @@ namespace LemonadeStand
         }
         public void DisplayProfit(Inventory userInventory)
         {
-            Console.WriteLine("You started the day with " + (userInventory.moneyCount - userInventory.dailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.dailyProfit.ToString("0.00") + ".");
+            Console.WriteLine("You started the day with " + (userInventory.MoneyCount - userInventory.dailyProfit).ToString("0.00") + ".  Today you have earned " + userInventory.dailyProfit.ToString("0.00") + ".");
             Console.WriteLine("You're total net worth so far: " + userInventory.OverallProfit.ToString("0.00"));
         }
         public void DisplayFinalTotal(Inventory userInventory, int gameLength)
@@ -142,7 +142,7 @@ namespace LemonadeStand
         public string AskWhatToDo(Inventory userInventory, Player player, Store store, Recipe recipe)
         {
             Func<string, bool> whatToDoOption = VerifyWhatToDo;
-            Console.WriteLine("You currently have $" + userInventory.moneyCount.ToString("0.00") + ".  Your current stock contains " + userInventory.lemonCount + " lemons, " + userInventory.sugarCount + " cups of sugar, " + userInventory.iceCount + " ice cubes and " + userInventory.cupsCount + " plastic cups.\n");
+            Console.WriteLine("You currently have $" + userInventory.MoneyCount.ToString("0.00") + ".  Your current stock contains " + userInventory.LemonCount + " lemons, " + userInventory.SugarCount + " cups of sugar, " + userInventory.IceCount + " ice cubes and " + userInventory.CupsCount + " plastic cups.\n");
             userInput = VerifyInput("What would you like to do?  Type '" + stockOption + "' to check and buy items for your stock, '" + recipeOption + "' to adjust the items used in your lemonade, or '" + startOption + "' to start the next day.\n", whatToDoOption); //finish typing options switch recipe/buy stock
             CheckWhatToDo(userInput, userInventory, player, store, recipe);
             CheckIfEnoughStock(userInventory, player, store, recipe);
@@ -201,7 +201,7 @@ namespace LemonadeStand
         }
         public void CheckIfEnoughStock(Inventory userInventory, Player player, Store store, Recipe recipe)
         {
-            if (userInventory.lemonCount < recipe.lemonsUsed || userInventory.sugarCount < recipe.sugarUsed || userInventory.iceCount < recipe.iceUsed || userInventory.cupsCount == 0)
+            if (userInventory.LemonCount < recipe.lemonsUsed || userInventory.SugarCount < recipe.sugarUsed || userInventory.IceCount < recipe.iceUsed || userInventory.CupsCount == 0)
             {
                 Console.WriteLine("\n**You don't have enough supplies to make any pitchers of lemonade!**\n\nPress any key to continue.\n");
                 Console.ReadKey();

@@ -87,77 +87,77 @@ namespace LemonadeStand
         public void BuyLemons(Inventory userInventory, Store store, double boughtLemons)
         {
             priceMultiplier = CalculateLemonSugarMultiplier(store, boughtLemons);
-            if (this.userInventory.moneyCount - store.lemons10 * priceMultiplier < 0)
+            if (this.userInventory.MoneyCount - store.lemons10 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtLemons + " lemons.**\n");
             }
             else
             {
-                userInventory.moneyCount -= store.lemons10 * priceMultiplier;
+                userInventory.MoneyCount -= store.lemons10 * priceMultiplier;
                 userInventory.OverallProfit -= store.lemons10 * priceMultiplier;
                 for (double i = boughtLemons; i > 0; i--)
                 {
                     lemon = new Lemon();
                     totalLemons.Add(lemon);
                 }
-                userInventory.lemonCount = totalLemons.Count;
+                userInventory.LemonCount = totalLemons.Count;
             }
         }
         public void BuySugar(Inventory userInventory, Store store, double boughtSugar)
         {
             priceMultiplier = CalculateLemonSugarMultiplier(store, boughtSugar);
-            if (this.userInventory.moneyCount - store.sugar10 * priceMultiplier < 0)
+            if (this.userInventory.MoneyCount - store.sugar10 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtSugar + " cups of sugar.**\n");
             }
             else
             {
-                userInventory.moneyCount -= store.sugar10 * priceMultiplier;
+                userInventory.MoneyCount -= store.sugar10 * priceMultiplier;
                 userInventory.OverallProfit -= store.sugar10 * priceMultiplier;
                 for (double i = boughtSugar; i > 0; i--)
                 {
                     sugar = new Sugar();
                     totalSugar.Add(sugar);
                 }
-                userInventory.sugarCount = totalSugar.Count;
+                userInventory.SugarCount = totalSugar.Count;
             }
         }
         public void BuyIce(Inventory userInventory, Store store, double boughtIce)
         {
             priceMultiplier = CalculateIceCupsMultiplier(store, boughtIce);
-            if (this.userInventory.moneyCount - store.ice100 * priceMultiplier < 0)
+            if (this.userInventory.MoneyCount - store.ice100 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtIce + " ice cubes.**\n");
             }
             else
             {
-                userInventory.moneyCount -= store.ice100 * priceMultiplier;
+                userInventory.MoneyCount -= store.ice100 * priceMultiplier;
                 userInventory.OverallProfit -= store.ice100 * priceMultiplier;
                 for (double i = boughtIce; i > 0; i--)
                 {
                     iceCube = new Ice();
                     totalIceCubes.Add(iceCube);
                 }
-                userInventory.iceCount = totalIceCubes.Count;
+                userInventory.IceCount = totalIceCubes.Count;
             }
         }
         public void BuyCups(Inventory userInventory, Store store, double boughtCups)
         {
             priceMultiplier = CalculateIceCupsMultiplier(store, boughtCups);
-            if (this.userInventory.moneyCount - store.cups100 * priceMultiplier < 0)
+            if (this.userInventory.MoneyCount - store.cups100 * priceMultiplier < 0)
             {
                 Console.WriteLine("\n**You can't afford to buy " + boughtCups + " cups.**\n");
             }
             else
             {
-                userInventory.moneyCount -= store.cups100 * priceMultiplier;
+                userInventory.MoneyCount -= store.cups100 * priceMultiplier;
                 userInventory.OverallProfit -= store.cups100 * priceMultiplier;
                 for (double i = boughtCups; i > 0; i--)
                 {
                     cup = new Cup();
                     totalCups.Add(cup);
                 }
-                userInventory.cupsCount = totalCups.Count;
+                userInventory.CupsCount = totalCups.Count;
             }
         }
         public void AgeLemons(Inventory userInventory)
@@ -186,7 +186,7 @@ namespace LemonadeStand
                     totalLemons.Remove(lemon);
                 }
             }
-            userInventory.lemonCount = totalLemons.Count;
+            userInventory.LemonCount = totalLemons.Count;
             AnnounceLemonSpoilage(nearlyBadLemons, spoiledLemons);
             nearlyBadLemons = 0;
             spoiledLemons = 0;
@@ -209,11 +209,11 @@ namespace LemonadeStand
                 Console.WriteLine("\n**You had " + totalIceCubes.Count + " unused ice cubes which are now melted.**\n");
             }
             totalIceCubes.Clear();
-            userInventory.iceCount = totalIceCubes.Count;
+            userInventory.IceCount = totalIceCubes.Count;
         }
         public Pitcher CreatePitcher (Recipe recipe, Inventory userInventory, Pitcher pitcher)
         {
-            if (userInventory.lemonCount >= recipe.lemonsUsed && userInventory.sugarCount >= recipe.sugarUsed && userInventory.iceCount >= recipe.iceUsed && userInventory.cupsCount>= pitcher.CupsPerPitcher)
+            if (userInventory.LemonCount >= recipe.lemonsUsed && userInventory.SugarCount >= recipe.sugarUsed && userInventory.IceCount >= recipe.iceUsed && userInventory.CupsCount>= pitcher.CupsPerPitcher)
             {
                 pitcher = new Pitcher(RemoveUsedLemons(recipe, userInventory), RemoveUsedSugar(recipe, userInventory), RemoveUsedIce(recipe, userInventory), pitcher.CupsPerPitcher, true);
             }
@@ -228,7 +228,7 @@ namespace LemonadeStand
             bool removeLemon;
             for (int i = recipe.lemonsUsed; i > 0; i--)
             {
-                userInventory.lemonCount -= 1;
+                userInventory.LemonCount -= 1;
                 removeLemon = true;
                 for (int j = totalLemons.Count - 1; j >= 0; j--)
                 {
@@ -272,7 +272,7 @@ namespace LemonadeStand
         {
             for (double i = recipe.sugarUsed; i > 0; i--)
             {
-                userInventory.sugarCount -= 1;
+                userInventory.SugarCount -= 1;
                 totalSugar.RemoveAt(0);
             }
             return recipe.sugarUsed;
@@ -281,14 +281,14 @@ namespace LemonadeStand
         {
             for (double i = recipe.iceUsed; i > 0; i--)
             {
-                userInventory.iceCount -= 1;
+                userInventory.IceCount -= 1;
                 totalIceCubes.RemoveAt(0);
             }
             return recipe.iceUsed;
         }
         public void RemoveUsedCup(Recipe recipe, Inventory userInventory)
         {
-                userInventory.cupsCount -= 1;
+                userInventory.CupsCount -= 1;
                 totalCups.RemoveAt(0);
         }
     }

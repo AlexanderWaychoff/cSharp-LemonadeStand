@@ -11,27 +11,27 @@ namespace LemonadeStand
         List<Customer> customers = new List<Customer>();
         Customer customer;
 
-        public int startingCustomers = 100; //how many customers the player automatically starts with
-        public int startingPopularity = 3;  //how aware customers are at the start of the game, fluctuating down to 1
-        public double satisfiedCustomerCount;
-        public double popularCustomerCount;
-        public double customerChance;
-        public double baseIceCubePreference = 20;
-        public double baseCustomerPayment = 0.85;   //default what a customer will pay on a average weather day
-        public double baseExtraCustomerChance = 7;  //7% chance increase per extra friendliness of a customer stopping by
-        public int minimumForCustomerRemoval = 6; //random number between 4-10, if equal to this or less will remove customer from list
-        public int weatherPriceMultiplier = 6;
-        public int weatherPriceAdditive = 250;
-        public int weatherPriceDividedEffect = 6; //per this many cents over/under, decrease/increase chance of customer buying by 1%
-        public double customerCentQuality = 0.50;
-        public double customerIceQuality = 7;
+        private int startingCustomers = 100; //how many customers the player automatically starts with
+        private int startingPopularity = 3;  //how aware customers are at the start of the game, fluctuating down to 1
+        private double satisfiedCustomerCount;
+        private double popularCustomerCount;
+        private double customerChance;
+        private double baseIceCubePreference = 20;
+        private double baseCustomerPayment = 0.85;   //default what a customer will pay on a average weather day
+        private double baseExtraCustomerChance = 7;  //7% chance increase per extra friendliness of a customer stopping by
+        private int minimumForCustomerRemoval = 6; //random number between 4-10, if equal to this or less will remove customer from list
+        private int weatherPriceMultiplier = 6;
+        private int weatherPriceAdditive = 250;
+        private int weatherPriceDividedEffect = 6; //per this many cents over/under, decrease/increase chance of customer buying by 1%
+        private double customerCentQuality = 0.50;
+        private double customerIceQuality = 7;
         Random randomThirstiness = new Random();
         Random randomFlavor = new Random();
         Random randomAttitude = new Random();
         Random randomPopularity = new Random();
         Random randomRainValue = new Random();
         Random randomCustomerChance = new Random();
-        public double storeRandomValue;
+        private double storeRandomValue;
 
         public BusinessTransactions()
         {
@@ -94,16 +94,16 @@ namespace LemonadeStand
             {
                 if(randomCustomerChance.Next(101) <= customer.percentChanceOfBuying)
                 {
-                    if (pitcher.hasEnoughStock && pitcher.cupsLeft == 0)
+                    if (pitcher.HasEnoughStock && pitcher.CupsLeft == 0)
                     {
                         pitcher = player.CreatePitcher(recipe, userInventory, pitcher);
                     }
-                    if (pitcher.hasEnoughStock && pitcher.cupsLeft > 0)
+                    if (pitcher.HasEnoughStock && pitcher.CupsLeft > 0)
                     {
                         totalCustomerPurchases += 1;
-                        userInventory.moneyCount += recipe.price;
+                        userInventory.MoneyCount += recipe.price;
                         userInventory.dailyProfit += recipe.price;
-                        pitcher.cupsLeft -= 1;
+                        pitcher.CupsLeft -= 1;
                         player.RemoveUsedCup(recipe, userInventory);
                         customers[i - 1].hasPurchasedToday = true;
                         customers[i - 1] = testCustomerSatisfaction(customers[i - 1], dailyWeather, recipe);

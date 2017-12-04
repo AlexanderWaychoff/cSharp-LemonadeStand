@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Weather
+    public class Weather
     {
-        List<string> weatherType = new List<string>() { "clear of clouds", "slightly cloudy", "overcast", "stormy"};
+        List<string> weatherConditions = new List<string>() { "clear of clouds", "slightly cloudy", "overcast", "stormy"};
         private int amountOfWeatherConditions = 4;
         private int possiblyAdjustRainChance = 2;
         private int adjustRainChance = 1;
@@ -41,7 +41,7 @@ namespace LemonadeStand
         {
             int weatherCondition = randomNumber.Next(amountOfWeatherConditions);
             weatherCondition = ReduceChanceOfRain(weatherCondition);
-            return weatherType[weatherCondition];
+            return weatherConditions[weatherCondition];
         }
         public int ReduceChanceOfRain(int odds)
         {
@@ -58,7 +58,7 @@ namespace LemonadeStand
         }
         public bool IsRaining(string clouds)
         {
-            int indexOfSky = weatherType.IndexOf(clouds);
+            int indexOfSky = weatherConditions.IndexOf(clouds);
             int catchRandomNumber;
             if (indexOfSky >= possiblyAdjustRainChance)
             {

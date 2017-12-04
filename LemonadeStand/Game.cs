@@ -39,19 +39,19 @@ namespace LemonadeStand
             forecast = dailyForecast.CreateForecast();
             PlayGame(gameLength);
         }
-        public Time SetUpGameLength()
+        private Time SetUpGameLength()
         {
             Time gameLength = new Time(userInterface.GetPlayTime());
             return gameLength;
         }
-        public void PlayGame(Time gameLength)
+        private void PlayGame(Time gameLength)
         {
             customers = customerSales.SetUpCustomerBase();
             TakeTurns(gameLength, todaysForecast, customers);
             userInterface.ClearScreen();
             ShowFinalScore(gameLength);
         }
-        public void TakeTurns(Time gameLength, Conditions todaysForecast, List<Customer> customers)
+        private void TakeTurns(Time gameLength, Conditions todaysForecast, List<Customer> customers)
         {
             for (int i = gameLength.gameDays; i > 0; i--)
             {
@@ -76,17 +76,17 @@ namespace LemonadeStand
                 userInterface.Pause();
             }
         }
-        public Store ChangeStorePrices()
+        private Store ChangeStorePrices()
         {
             return store.UpdateStore();
         }
-        public double CalculateAllProfit(Inventory userInventory, Interface userInterface)
+        private double CalculateAllProfit(Inventory userInventory, Interface userInterface)
         {
             //userInventory.CalculateDailyProfit(userInventory, userInterface);
             userInventory.CalculateOverallProfit(userInventory);
             return userInventory.OverallProfit;
         }
-        public void ShowFinalScore(Time gameLength)
+        private void ShowFinalScore(Time gameLength)
         {
             //highScore.SubmitHighScore(player, userInventory, gameLength.gameDays);
             //highScore.ObtainHighScores();

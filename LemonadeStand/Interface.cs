@@ -172,25 +172,25 @@ namespace LemonadeStand
             Func<string, bool> howMany100to1000 = VerifyHowMany100to1000;
             if (userInput == lemonsOption)
             {
-                userNumber = ConvertToInt(VerifyInput("'10' lemons cost $" + store.lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.lemons10 * store.times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.lemons10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
+                userNumber = ConvertToInt(VerifyInput("'10' lemons cost $" + store.Lemons10.ToString("0.00") + ", '50' lemons cost $" + (store.Lemons10 * store.Times5Multiplier).ToString("0.00") + ", and '100' lemons cost $" + (store.Lemons10 * store.Times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
                 player.BuyLemons(userInventory, store, userNumber);
                 CheckWhatToBuy(userInventory, player, store, recipe);
             }
             if (userInput == sugarOption)
             {
-                userNumber = ConvertToInt(VerifyInput("'10' cups of sugar cost $" + store.sugar10.ToString("0.00") + ", '50' cups of sugar cost $" + (store.sugar10 * store.times5Multiplier).ToString("0.00") + ", and '100' cups of sugar cost $" + (store.sugar10 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
+                userNumber = ConvertToInt(VerifyInput("'10' cups of sugar cost $" + store.Sugar10.ToString("0.00") + ", '50' cups of sugar cost $" + (store.Sugar10 * store.Times5Multiplier).ToString("0.00") + ", and '100' cups of sugar cost $" + (store.Sugar10 * store.Times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany10to100));
                 player.BuySugar(userInventory, store, userNumber);
                 CheckWhatToBuy(userInventory, player, store, recipe);
             }
             if (userInput == iceOption)
             {
-                userNumber = ConvertToInt(VerifyInput("'100' ice cubes cost $" + store.ice100.ToString("0.00") + ", '500' ice cubes cost $" + (store.ice100 * store.times5Multiplier).ToString("0.00") + ", and '1000' ice cubes cost $" + (store.ice100 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany100to1000));
+                userNumber = ConvertToInt(VerifyInput("'100' ice cubes cost $" + store.Ice100.ToString("0.00") + ", '500' ice cubes cost $" + (store.Ice100 * store.Times5Multiplier).ToString("0.00") + ", and '1000' ice cubes cost $" + (store.Ice100 * store.Times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany100to1000));
                 player.BuyIce(userInventory, store, userNumber);
                 CheckWhatToBuy(userInventory, player, store, recipe);
             }
             if (userInput == cupsOption)
             {
-                userNumber = ConvertToInt(VerifyInput("'100' cups cost $" + store.cups100.ToString("0.00") + ", '500' cups cost $" + (store.cups100 * store.times5Multiplier).ToString("0.00") + ", and '1000' cups cost $" + (store.cups100 * store.times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany100to1000));
+                userNumber = ConvertToInt(VerifyInput("'100' cups cost $" + store.Cups100.ToString("0.00") + ", '500' cups cost $" + (store.Cups100 * store.Times5Multiplier).ToString("0.00") + ", and '1000' cups cost $" + (store.Cups100 * store.Times10Multiplier).ToString("0.00") + ".  How many will you buy?  Or to go back and not buy anything, enter '0'.\n", howMany100to1000));
                 player.BuyCups(userInventory, store, userNumber);
                 CheckWhatToBuy(userInventory, player, store, recipe);
             }

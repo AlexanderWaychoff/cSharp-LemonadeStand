@@ -86,7 +86,6 @@ namespace LemonadeStand
                 dailyProfit = value;
             }
         }
-
         public double OverallProfit
         {
             get
@@ -98,6 +97,7 @@ namespace LemonadeStand
                 overallProfit = value;
             }
         }
+
         public Inventory(int startingLemons, int startingSugar, int startingIce, int startingCups)
         {
             money = new Money(startingFunds);

@@ -25,6 +25,14 @@ namespace LemonadeStand
         private string cupsOption = "cups";
         private string priceOption = "price";
 
+        public string LemonsOption
+        {
+            get
+            {
+                return lemonsOption;
+            }
+        }
+
         public Interface()
         {
 

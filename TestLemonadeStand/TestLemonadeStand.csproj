@@ -56,7 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUpdateStore.cs" />
     <Compile Include="TestTestCustomerFlavor.cs" />
-    <Compile Include="UnitTest2.cs" />
+    <Compile Include="TestConvertToDecimal.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LemonadeStand\LemonadeStand.csproj">

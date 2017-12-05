@@ -27,7 +27,7 @@ namespace TestLemonadeStand
             //Act
             store.UpdateStore();
             //Assert
-            Assert.AreNotEqual(baseSugarPrice, store.Lemons10);
+            Assert.AreNotEqual(baseSugarPrice, store.Sugar10);
         }
     }
 }

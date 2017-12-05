@@ -57,6 +57,7 @@
     <Compile Include="TestUpdateStore.cs" />
     <Compile Include="TestTestCustomerFlavor.cs" />
     <Compile Include="TestConvertToDecimal.cs" />
+    <Compile Include="TestTestLemonSpoilage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LemonadeStand\LemonadeStand.csproj">

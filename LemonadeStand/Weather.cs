@@ -29,13 +29,11 @@ namespace LemonadeStand
         }
         public Conditions GetTheDaysWeather()
         {
-            //List<string> allWeather = new List<string>();
             cloudiness = DetermineCloudCover();
             isRaining = IsRaining(cloudiness);
             temperature = DetermineTemperature(isRaining);
             todaysWeather = new Conditions(cloudiness, isRaining, temperature);
-            //Console.WriteLine("The sky is {0} and it {1}.  The temperature is {2}.\n", todaysWeather.cloudiness, isRaining ? "is raining" : "is not raining", temperature);
-            return todaysWeather;//remove later
+            return todaysWeather;
         }
         public string DetermineCloudCover()
         {

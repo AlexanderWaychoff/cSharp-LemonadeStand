@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Lemon
+    public class Lemon
     {
         public List<string> lemonDetail = new List<string>() {"squishy", "lumpy", "firm"};
         public string lemonStatus;

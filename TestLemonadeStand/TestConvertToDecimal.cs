@@ -18,5 +18,16 @@ namespace TestLemonadeStand
             //assert
             Assert.AreEqual(11.27, justDecimal);
         }
+        [TestMethod]
+        public void ConvertToDecimal_NegativeDecimalString_ReturnNegativeNumber()
+        {
+            //arrange
+            Interface innerface = new Interface();
+            string decimalString = "-11.27";
+            //act
+            double justDecimal = innerface.ConvertToDecimal(decimalString);
+            //assert
+            Assert.AreEqual(-11.27, justDecimal);
+        }
     }
 }

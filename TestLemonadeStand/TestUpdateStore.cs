@@ -29,5 +29,16 @@ namespace TestLemonadeStand
             //Assert
             Assert.AreNotEqual(baseSugarPrice, store.Sugar10);
         }
+        [TestMethod]
+        public void UpdateStore_IcePrice_isNotBaseIcePrice()
+        {
+            //Arrange
+            Store store = new Store();
+            double baseIcePrice = store.Ice100;
+            //Act
+            store.UpdateStore();
+            //Assert
+            Assert.AreNotEqual(baseIcePrice, store.Ice100);
+        }
     }
 }

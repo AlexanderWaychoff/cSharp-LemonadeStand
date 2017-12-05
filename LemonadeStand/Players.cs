@@ -17,7 +17,7 @@ namespace LemonadeStand
 
         Inventory userInventory = new Inventory(0, 0, 0, 0); //starting items count
 
-        List<Lemon> totalLemons = new List<Lemon>();
+        public List<Lemon> totalLemons = new List<Lemon>();
         Lemon lemon;
         List<Sugar> totalSugar = new List<Sugar>();
         Sugar sugar;

@@ -19,7 +19,7 @@ namespace LemonadeStand
         Conditions todaysForecast;
         Inventory userInventory;
         BusinessTransactions customerSales = new BusinessTransactions();
-        //SQL highScore = new SQL();
+        SQL highScore = new SQL();
 
         string userInput;
         List<Customer> customers = new List<Customer>();
@@ -32,7 +32,7 @@ namespace LemonadeStand
         {
             userInterface.DisplayRules();
             Time gameLength = SetUpGameLength();
-            //highScore.ObtainHighScores();
+            highScore.ObtainHighScores();
             userInterface.AskForName(player);
             Console.WriteLine(player.Name);
             Console.Clear();
@@ -82,14 +82,14 @@ namespace LemonadeStand
         }
         private double CalculateAllProfit(Inventory userInventory, Interface userInterface)
         {
-            //userInventory.CalculateDailyProfit(userInventory, userInterface);
+            userInventory.CalculateDailyProfit(userInventory, userInterface);
             userInventory.CalculateOverallProfit(userInventory);
             return userInventory.OverallProfit;
         }
         private void ShowFinalScore(Time gameLength)
         {
-            //highScore.SubmitHighScore(player, userInventory, gameLength.gameDays);
-            //highScore.ObtainHighScores();
+            highScore.SubmitHighScore(player, userInventory, gameLength.gameDays);
+            highScore.ObtainHighScores();
             userInterface.DisplayFinalTotal(userInventory, gameLength.gameDays);
         }
     }
